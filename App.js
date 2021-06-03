@@ -16,11 +16,11 @@ export default function App() {
           <Text style={styles.footerText}>0</Text>
         </View>
         <View style={styles.footerComponent}>
-          <Text style={styles.footerText}>Read</Text>
+          <Text style={styles.footerText}>Reading</Text>
           <Text style={styles.footerText}>0</Text>
         </View>
         <View style={styles.footerComponent}>
-          <Text style={styles.footerText}>In Progress</Text>
+          <Text style={styles.footerText}>Read</Text>
           <Text style={styles.footerText}>0</Text>
         </View>
       </View>
