@@ -1,30 +1,26 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import Count from "./Components/Count";
 
 export default function App() {
+  const [totalCount, setTotalCount] = useState(0);
+  const [readingCount, setReadingCount] = useState(0);
+  const [readCount, setReadCount] = useState(0);
+
   return (
     <View style={styles.container}>
-      <SafeAreaView style={{}} />
+      <SafeAreaView />
       <View style={styles.header}>
         <Text style={styles.headerText}>Bibliophilia</Text>
       </View>
       <View style={styles.body} />
       <View style={styles.footer}>
-        <View style={styles.footerComponent}>
-          <Text style={styles.footerText}>Total</Text>
-          <Text style={styles.footerText}>0</Text>
-        </View>
-        <View style={styles.footerComponent}>
-          <Text style={styles.footerText}>Reading</Text>
-          <Text style={styles.footerText}>0</Text>
-        </View>
-        <View style={styles.footerComponent}>
-          <Text style={styles.footerText}>Read</Text>
-          <Text style={styles.footerText}>0</Text>
-        </View>
+        <Count title="Total" count={totalCount} />
+        <Count title="Reading" count={readingCount} />
+        <Count title="Read" count={readCount} />
       </View>
-      <SafeAreaView style={{}} />
+      <SafeAreaView />
     </View>
   );
 }
@@ -52,10 +48,5 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderTopColor: "#E9E9E9",
     flexDirection: "row",
-  },
-  footerComponent: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
