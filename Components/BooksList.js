@@ -8,13 +8,13 @@ import {
 } from "react-native";
 
 export default function BooksList(props) {
-  const { books } = props;
-  const itemsList = ({ item }) => (
+  const { books, markAsRead } = props;
+  const itemsList = ({ item, index }) => (
     <View style={styles.booksList}>
       <View style={styles.bookItem}>
         <Text style={styles.bookTitle}>{item}</Text>
       </View>
-      <TouchableOpacity style={styles.markAsReadView}>
+      <TouchableOpacity style={styles.markAsReadView} onPress={markAsRead}>
         <View>
           <Text style={styles.markAsReadText}>Mark as Read</Text>
         </View>

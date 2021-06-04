@@ -20,6 +20,7 @@ export default function App() {
   const [isAddBookBarVisible, setIsAddBookBarVisible] = useState(false);
   const [book, setBook] = useState("");
   const [books, setBooks] = useState([]);
+  const [id, setId] = useState(null);
 
   const showAddBookBar = () => {
     setIsAddBookBarVisible(true);
@@ -38,6 +39,11 @@ export default function App() {
   // console.log("books => ", books);
   // console.log("totalCount => ", totalCount);
   // console.log("readingCount => ", readingCount);
+
+  const markAsRead = () => {
+    setReadingCount((prevReadingCount) => prevReadingCount - 1);
+    setReadCount((prevReadCount) => prevReadCount + 1);
+  };
 
   return (
     <View style={styles.container}>
@@ -71,7 +77,7 @@ export default function App() {
             </TouchableOpacity>
           </View>
         )}
-        <BooksList books={books} />
+        <BooksList books={books} markAsRead={markAsRead} />
         <TouchableOpacity
           style={{
             position: "absolute",
