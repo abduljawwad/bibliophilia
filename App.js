@@ -1,30 +1,93 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
+import Count from "./Components/Count";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function App() {
+  const [totalCount, setTotalCount] = useState(0);
+  const [readingCount, setReadingCount] = useState(0);
+  const [readCount, setReadCount] = useState(0);
+  const [isAddBookBarVisible, setIsAddBookBarVisible] = useState(false);
+  const [book, setBook] = useState("");
+  const [books, setBooks] = useState([]);
+
+  const showAddBookBar = () => {
+    setIsAddBookBarVisible(true);
+  };
+
+  const hideAddBookBar = () => {
+    setIsAddBookBarVisible(false);
+  };
+
+  const addBook = () => {
+    setBooks([...books, book]);
+    setTotalCount((prevTotalCount) => prevTotalCount + 1);
+    setReadingCount((prevReadingCount) => prevReadingCount + 1);
+  };
+
+  console.log("books => ", books);
+  console.log("totalCount => ", totalCount);
+  console.log("readingCount => ", readingCount);
+
   return (
     <View style={styles.container}>
-      <SafeAreaView style={{}} />
+      <SafeAreaView />
       <View style={styles.header}>
         <Text style={styles.headerText}>Bibliophilia</Text>
       </View>
-      <View style={styles.body} />
-      <View style={styles.footer}>
-        <View style={styles.footerComponent}>
-          <Text style={styles.footerText}>Total</Text>
-          <Text style={styles.footerText}>0</Text>
-        </View>
-        <View style={styles.footerComponent}>
-          <Text style={styles.footerText}>Read</Text>
-          <Text style={styles.footerText}>0</Text>
-        </View>
-        <View style={styles.footerComponent}>
-          <Text style={styles.footerText}>In Progress</Text>
-          <Text style={styles.footerText}>0</Text>
-        </View>
+      <View style={styles.body}>
+        {isAddBookBarVisible && (
+          <View style={styles.addBookBarView}>
+            <TextInput
+              style={styles.addBookBarTextInput}
+              placeholder="Enter Book Name"
+              placeholderTextColor="grey"
+              onChangeText={(text) => setBook(text)}
+            ></TextInput>
+            <TouchableOpacity>
+              <View style={styles.checkMarkView}>
+                <Ionicons
+                  name="ios-checkmark"
+                  color="white"
+                  size={30}
+                  onPress={addBook}
+                ></Ionicons>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={hideAddBookBar}>
+              <View style={styles.closeMarkView}>
+                <Ionicons name="ios-close" color="white" size={30}></Ionicons>
+              </View>
+            </TouchableOpacity>
+          </View>
+        )}
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            bottom: 20,
+            right: 20,
+          }}
+          onPress={showAddBookBar}
+        >
+          <View style={styles.plusButtonView}>
+            <Text style={styles.plusButton}>+</Text>
+          </View>
+        </TouchableOpacity>
       </View>
-      <SafeAreaView style={{}} />
+      <View style={styles.footer}>
+        <Count title="Total" count={totalCount} />
+        <Count title="Reading" count={readingCount} />
+        <Count title="Read" count={readCount} />
+      </View>
+      <SafeAreaView />
     </View>
   );
 }
@@ -47,15 +110,46 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
   },
+  addBookBarView: {
+    flexDirection: "row",
+    backgroundColor: "#E9E9E9",
+    height: 50,
+    justifyContent: "flex-end",
+  },
+  addBookBarTextInput: {
+    flex: 1,
+    paddingLeft: 5,
+  },
+  checkMarkView: {
+    height: 50,
+    width: 50,
+    backgroundColor: "#a5deba",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  closeMarkView: {
+    height: 50,
+    width: 50,
+    backgroundColor: "#deada5",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  plusButtonView: {
+    height: 50,
+    width: 50,
+    backgroundColor: "#AAD1E6",
+    borderRadius: 25,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  plusButton: {
+    color: "white",
+    fontSize: 40,
+  },
   footer: {
     height: 70,
     borderTopWidth: 0.5,
     borderTopColor: "#E9E9E9",
     flexDirection: "row",
-  },
-  footerComponent: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
