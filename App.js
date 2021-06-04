@@ -10,6 +10,7 @@ import {
   FlatList,
 } from "react-native";
 import Count from "./Components/Count";
+import BooksList from "./Components/BooksList";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function App() {
@@ -70,31 +71,7 @@ export default function App() {
             </TouchableOpacity>
           </View>
         )}
-        <FlatList
-          style={styles.booksList}
-          data={[...books]}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item, index }) => (
-            <View key={index}>
-              <View key={index}>
-                <Text>{item}</Text>
-              </View>
-            </View>
-          )}
-          ListEmptyComponent={
-            <View
-              style={{
-                height: 100,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                No books added to the list yet
-              </Text>
-            </View>
-          }
-        ></FlatList>
+        <BooksList books={books} />
         <TouchableOpacity
           style={{
             position: "absolute",
