@@ -40,7 +40,9 @@ export default function App() {
   // console.log("totalCount => ", totalCount);
   // console.log("readingCount => ", readingCount);
 
-  const markAsRead = () => {
+  const markAsRead = (selectedBook, index) => {
+    let newBooksList = books.filter((book) => book !== selectedBook);
+    setBooks(newBooksList);
     setReadingCount((prevReadingCount) => prevReadingCount - 1);
     setReadCount((prevReadCount) => prevReadCount + 1);
   };
@@ -77,7 +79,10 @@ export default function App() {
             </TouchableOpacity>
           </View>
         )}
-        <BooksList books={books} markAsRead={markAsRead} />
+        <BooksList
+          books={books}
+          markAsRead={(item, index) => markAsRead(item, index)}
+        />
         <TouchableOpacity
           style={{
             position: "absolute",

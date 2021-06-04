@@ -14,7 +14,10 @@ export default function BooksList(props) {
       <View style={styles.bookItem}>
         <Text style={styles.bookTitle}>{item}</Text>
       </View>
-      <TouchableOpacity style={styles.markAsReadView} onPress={markAsRead}>
+      <TouchableOpacity
+        style={styles.markAsReadView}
+        onPress={() => markAsRead(item, index)}
+      >
         <View>
           <Text style={styles.markAsReadText}>Mark as Read</Text>
         </View>
