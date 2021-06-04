@@ -1,6 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import Count from "./Components/Count";
 
 export default function App() {
@@ -14,7 +21,25 @@ export default function App() {
       <View style={styles.header}>
         <Text style={styles.headerText}>Bibliophilia</Text>
       </View>
-      <View style={styles.body} />
+      <View style={styles.body}>
+        <View style={styles.searchBarView}>
+          <TextInput
+            style={styles.searchBarTextInput}
+            placeholder="Enter Book Name"
+            placeholderTextColor="grey"
+          ></TextInput>
+          <TouchableOpacity>
+            <View style={styles.checkMarkView}></View>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          style={{ position: "absolute", bottom: 20, right: 20 }}
+        >
+          <View style={styles.plusButtonView}>
+            <Text style={styles.plusButton}>+</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
       <View style={styles.footer}>
         <Count title="Total" count={totalCount} />
         <Count title="Reading" count={readingCount} />
@@ -42,6 +67,26 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
+  },
+  searchBarView: {
+    flexDirection: "row",
+    backgroundColor: "#E9E9E9",
+    height: 50,
+  },
+  searchBarTextInput: {
+    paddingLeft: 5,
+  },
+  plusButtonView: {
+    height: 50,
+    width: 50,
+    backgroundColor: "#AAD1E6",
+    borderRadius: 25,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  plusButton: {
+    color: "white",
+    fontSize: 30,
   },
   footer: {
     height: 70,
