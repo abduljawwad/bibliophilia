@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TextInput,
+  FlatList,
 } from "react-native";
 import Count from "./Components/Count";
 import { Ionicons } from "@expo/vector-icons";
@@ -33,9 +34,9 @@ export default function App() {
     setReadingCount((prevReadingCount) => prevReadingCount + 1);
   };
 
-  console.log("books => ", books);
-  console.log("totalCount => ", totalCount);
-  console.log("readingCount => ", readingCount);
+  // console.log("books => ", books);
+  // console.log("totalCount => ", totalCount);
+  // console.log("readingCount => ", readingCount);
 
   return (
     <View style={styles.container}>
@@ -69,6 +70,31 @@ export default function App() {
             </TouchableOpacity>
           </View>
         )}
+        <FlatList
+          style={styles.booksList}
+          data={[...books]}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item, index }) => (
+            <View key={index}>
+              <View key={index}>
+                <Text>{item}</Text>
+              </View>
+            </View>
+          )}
+          ListEmptyComponent={
+            <View
+              style={{
+                height: 100,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                No books added to the list yet
+              </Text>
+            </View>
+          }
+        ></FlatList>
         <TouchableOpacity
           style={{
             position: "absolute",
