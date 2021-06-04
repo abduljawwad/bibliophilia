@@ -29,9 +29,14 @@ export default function App() {
 
   const addBook = () => {
     setBooks([...books, book]);
+    setTotalCount((prevTotalCount) => prevTotalCount + 1);
+    setReadingCount((prevReadingCount) => prevReadingCount + 1);
   };
 
   console.log("books => ", books);
+  console.log("totalCount => ", totalCount);
+  console.log("readingCount => ", readingCount);
+
   return (
     <View style={styles.container}>
       <SafeAreaView />
