@@ -15,6 +15,15 @@ export default function App() {
   const [totalCount, setTotalCount] = useState(0);
   const [readingCount, setReadingCount] = useState(0);
   const [readCount, setReadCount] = useState(0);
+  const [isAddBookBarVisible, setIsAddBookBarVisible] = useState(false);
+
+  const showAddBookBar = () => {
+    setIsAddBookBarVisible(true);
+  };
+
+  const hideAddBookBar = () => {
+    setIsAddBookBarVisible(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -23,29 +32,36 @@ export default function App() {
         <Text style={styles.headerText}>Bibliophilia</Text>
       </View>
       <View style={styles.body}>
-        <View style={styles.searchBarView}>
-          <TextInput
-            style={styles.searchBarTextInput}
-            placeholder="Enter Book Name"
-            placeholderTextColor="grey"
-          ></TextInput>
-          <TouchableOpacity>
-            <View style={styles.checkMarkView}>
-              <Ionicons name="ios-checkmark" color="white" size={30}></Ionicons>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.closeMarkView}>
-              <Ionicons name="ios-close" color="white" size={30}></Ionicons>
-            </View>
-          </TouchableOpacity>
-        </View>
+        {isAddBookBarVisible && (
+          <View style={styles.addBookBarView}>
+            <TextInput
+              style={styles.addBookBarTextInput}
+              placeholder="Enter Book Name"
+              placeholderTextColor="grey"
+            ></TextInput>
+            <TouchableOpacity>
+              <View style={styles.checkMarkView}>
+                <Ionicons
+                  name="ios-checkmark"
+                  color="white"
+                  size={30}
+                ></Ionicons>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={hideAddBookBar}>
+              <View style={styles.closeMarkView}>
+                <Ionicons name="ios-close" color="white" size={30}></Ionicons>
+              </View>
+            </TouchableOpacity>
+          </View>
+        )}
         <TouchableOpacity
           style={{
             position: "absolute",
             bottom: 20,
             right: 20,
           }}
+          onPress={showAddBookBar}
         >
           <View style={styles.plusButtonView}>
             <Text style={styles.plusButton}>+</Text>
@@ -80,13 +96,13 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
   },
-  searchBarView: {
+  addBookBarView: {
     flexDirection: "row",
     backgroundColor: "#E9E9E9",
     height: 50,
     justifyContent: "flex-end",
   },
-  searchBarTextInput: {
+  addBookBarTextInput: {
     flex: 1,
     paddingLeft: 5,
   },
