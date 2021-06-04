@@ -9,6 +9,7 @@ import {
   TextInput,
 } from "react-native";
 import Count from "./Components/Count";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function App() {
   const [totalCount, setTotalCount] = useState(0);
@@ -29,11 +30,22 @@ export default function App() {
             placeholderTextColor="grey"
           ></TextInput>
           <TouchableOpacity>
-            <View style={styles.checkMarkView}></View>
+            <View style={styles.checkMarkView}>
+              <Ionicons name="ios-checkmark" color="white" size={30}></Ionicons>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.closeMarkView}>
+              <Ionicons name="ios-close" color="white" size={30}></Ionicons>
+            </View>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          style={{ position: "absolute", bottom: 20, right: 20 }}
+          style={{
+            position: "absolute",
+            bottom: 20,
+            right: 20,
+          }}
         >
           <View style={styles.plusButtonView}>
             <Text style={styles.plusButton}>+</Text>
@@ -72,9 +84,25 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "#E9E9E9",
     height: 50,
+    justifyContent: "flex-end",
   },
   searchBarTextInput: {
+    flex: 1,
     paddingLeft: 5,
+  },
+  checkMarkView: {
+    height: 50,
+    width: 50,
+    backgroundColor: "#a5deba",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  closeMarkView: {
+    height: 50,
+    width: 50,
+    backgroundColor: "#deada5",
+    alignItems: "center",
+    justifyContent: "center",
   },
   plusButtonView: {
     height: 50,
@@ -86,7 +114,7 @@ const styles = StyleSheet.create({
   },
   plusButton: {
     color: "white",
-    fontSize: 30,
+    fontSize: 40,
   },
   footer: {
     height: 70,
