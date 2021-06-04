@@ -16,6 +16,8 @@ export default function App() {
   const [readingCount, setReadingCount] = useState(0);
   const [readCount, setReadCount] = useState(0);
   const [isAddBookBarVisible, setIsAddBookBarVisible] = useState(false);
+  const [book, setBook] = useState("");
+  const [books, setBooks] = useState([]);
 
   const showAddBookBar = () => {
     setIsAddBookBarVisible(true);
@@ -25,6 +27,11 @@ export default function App() {
     setIsAddBookBarVisible(false);
   };
 
+  const addBook = () => {
+    setBooks([...books, book]);
+  };
+
+  console.log("books => ", books);
   return (
     <View style={styles.container}>
       <SafeAreaView />
@@ -38,6 +45,7 @@ export default function App() {
               style={styles.addBookBarTextInput}
               placeholder="Enter Book Name"
               placeholderTextColor="grey"
+              onChangeText={(text) => setBook(text)}
             ></TextInput>
             <TouchableOpacity>
               <View style={styles.checkMarkView}>
@@ -45,6 +53,7 @@ export default function App() {
                   name="ios-checkmark"
                   color="white"
                   size={30}
+                  onPress={addBook}
                 ></Ionicons>
               </View>
             </TouchableOpacity>
