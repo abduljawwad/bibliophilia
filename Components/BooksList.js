@@ -21,18 +21,19 @@ export default function BooksList(props) {
       </TouchableOpacity>
     </View>
   );
+
+  const listEmptyView = (
+    <View style={styles.listEmptyView}>
+      <Text style={styles.listEmptyText}>No books added to the list yet</Text>
+    </View>
+  );
+
   return (
     <FlatList
       data={[...books]}
       keyExtractor={(item, index) => index.toString()}
       renderItem={itemsList}
-      ListEmptyComponent={
-        <View style={styles.listEmptyView}>
-          <Text style={styles.listEmptyText}>
-            No books added to the list yet
-          </Text>
-        </View>
-      }
+      ListEmptyComponent={listEmptyView}
     ></FlatList>
   );
 }
