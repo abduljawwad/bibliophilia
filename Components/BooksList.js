@@ -9,22 +9,23 @@ import {
 
 export default function BooksList(props) {
   const { books } = props;
+  const itemsList = ({ item }) => (
+    <View style={styles.booksList}>
+      <View style={styles.bookItem}>
+        <Text style={styles.bookTitle}>{item}</Text>
+      </View>
+      <TouchableOpacity style={styles.markAsReadView}>
+        <View>
+          <Text style={styles.markAsReadText}>Mark as Read</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
   return (
     <FlatList
       data={[...books]}
       keyExtractor={(item, index) => index.toString()}
-      renderItem={({ item }) => (
-        <View style={styles.booksList}>
-          <View style={styles.bookItem}>
-            <Text style={styles.bookTitle}>{item}</Text>
-          </View>
-          <TouchableOpacity style={styles.markAsReadView}>
-            <View>
-              <Text style={styles.markAsReadText}>Mark as Read</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      )}
+      renderItem={itemsList}
       ListEmptyComponent={
         <View style={styles.listEmptyView}>
           <Text style={styles.listEmptyText}>
