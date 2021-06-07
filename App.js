@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import Count from "./Components/Count";
 import BooksList from "./Components/BooksList";
+import Button from "./Components/Button";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function App() {
@@ -57,39 +58,31 @@ export default function App() {
               placeholderTextColor="grey"
               onChangeText={(text) => setBook(text)}
             ></TextInput>
-            <TouchableOpacity>
-              <View style={styles.checkMarkView}>
-                <Ionicons
-                  name="ios-checkmark"
-                  color="white"
-                  size={30}
-                  onPress={addBook}
-                ></Ionicons>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={hideAddBookBar}>
-              <View style={styles.closeMarkView}>
-                <Ionicons name="ios-close" color="white" size={30}></Ionicons>
-              </View>
-            </TouchableOpacity>
+            <Button onPress={addBook} style={styles.checkMarkView}>
+              <Ionicons name="ios-checkmark" color="white" size={30}></Ionicons>
+            </Button>
+            <Button onPress={hideAddBookBar} style={styles.closeMarkView}>
+              <Ionicons name="ios-close" color="white" size={30}></Ionicons>
+            </Button>
           </View>
         )}
         <BooksList
           books={books}
           markAsRead={(item, index) => markAsRead(item, index)}
         />
-        <TouchableOpacity
-          style={{
-            position: "absolute",
-            bottom: 20,
-            right: 20,
-          }}
+        <Button
+          style={[
+            styles.plusButtonView,
+            {
+              position: "absolute",
+              bottom: 20,
+              right: 20,
+            },
+          ]}
           onPress={showAddBookBar}
         >
-          <View style={styles.plusButtonView}>
-            <Text style={styles.plusButton}>+</Text>
-          </View>
-        </TouchableOpacity>
+          <Text style={styles.plusButton}>+</Text>
+        </Button>
       </View>
       <View style={styles.footer}>
         <Count title="Total" count={totalCount} />
