@@ -20,7 +20,6 @@ export default function App() {
   const [isAddBookBarVisible, setIsAddBookBarVisible] = useState(false);
   const [book, setBook] = useState("");
   const [books, setBooks] = useState([]);
-  const [id, setId] = useState(null);
 
   const showAddBookBar = () => {
     setIsAddBookBarVisible(true);
@@ -35,10 +34,6 @@ export default function App() {
     setTotalCount((prevTotalCount) => prevTotalCount + 1);
     setReadingCount((prevReadingCount) => prevReadingCount + 1);
   };
-
-  // console.log("books => ", books);
-  // console.log("totalCount => ", totalCount);
-  // console.log("readingCount => ", readingCount);
 
   const markAsRead = (selectedBook, index) => {
     let newBooksList = books.filter((book) => book !== selectedBook);
