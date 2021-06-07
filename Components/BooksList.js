@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import PropTypes from "prop-types";
 
 export default function BooksList(props) {
   const { books, markAsRead } = props;

@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import propTypes from "prop-types";
 
 export default function Count(props) {
   return (
@@ -21,3 +22,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+Count.propTypes = {
+  title: propTypes.string.isRequired,
+  count: propTypes.number,
+};
+
+Count.defaultProps = {
+  title: "Title",
+};
