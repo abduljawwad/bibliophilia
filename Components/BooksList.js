@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
+import Button from "./Button";
 
 export default function BooksList(props) {
   const { books, markAsRead } = props;
@@ -14,14 +15,12 @@ export default function BooksList(props) {
       <View style={styles.bookItem}>
         <Text style={styles.bookTitle}>{item}</Text>
       </View>
-      <TouchableOpacity
+      <Button
         style={styles.markAsReadView}
         onPress={() => markAsRead(item, index)}
       >
-        <View>
-          <Text style={styles.markAsReadText}>Mark as Read</Text>
-        </View>
-      </TouchableOpacity>
+        <Text style={styles.markAsReadText}>Mark as Read</Text>
+      </Button>
     </View>
   );
 
