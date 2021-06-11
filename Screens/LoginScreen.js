@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Button, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  TextInput,
+  ActivityIndicator,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
 import CustomButton from "../Components/Button";
@@ -13,11 +20,17 @@ export default function LoginScreen({ navigation }) {
 
   const onSignIn = async () => {
     if (email && password) {
+      setIsLoading(true);
       try {
         const response = await firebase
           .auth()
           .signInWithEmailAndPassword(email, password);
+        if (response) {
+          setIsLoading(false);
+          //navigate the user
+        }
       } catch (err) {
+        setIsLoading(false);
         if (err.code == "auth/user-not-found") {
           alert("A user with that email does not exist. Please sign up");
         } else if (err.code == "auth/invalid-email") {
@@ -30,11 +43,18 @@ export default function LoginScreen({ navigation }) {
   };
   const onSignUp = async () => {
     if (email && password) {
+      setIsLoading(true);
       try {
         const response = await firebase
           .auth()
           .createUserWithEmailAndPassword(email, password);
+        if (response) {
+          setIsLoading(false);
+          //sign in the user
+          this.onSignIn(email, password);
+        }
       } catch (err) {
+        setIsLoading(false);
         if (err.code == "auth/email-already-in-use") {
           alert("User already exists. Try Logging in");
         }
@@ -46,7 +66,13 @@ export default function LoginScreen({ navigation }) {
   return (
     <>
       <View style={styles.container}>
-        {/* <Button title="Go to Home" /> */}
+        {isLoading ? (
+          <View
+            style={[StyleSheet.absoluteFill, styles.activityIndicatorContainer]}
+          >
+            <ActivityIndicator size="large" color={colors.logoBgColor} />
+          </View>
+        ) : null}
         <View style={styles.textInputContainer}>
           <TextInput
             style={[styles.textInput]}
@@ -116,5 +142,11 @@ export const styles = StyleSheet.create({
   signInButtonText: {
     fontSize: 20,
     fontWeight: "100",
+  },
+  activityIndicatorContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1000,
+    elevation: 1000,
   },
 });
