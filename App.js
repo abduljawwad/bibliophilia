@@ -1,18 +1,32 @@
 import React, { useState, useContext } from "react";
 import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import WelcomeScreen from "./Screens/WelcomeScreen";
 import HomeScreen from "./Screens/HomeScreen";
-import SignUpScreen from "./Screens/SignUpScreen";
+import LoginScreen from "./Screens/LoginScreen";
 import SettingsScreen from "./Screens/SettingsScreen";
+import * as firebase from "firebase";
+import { firebaseConfig } from "./Config/config";
 
 const Stack = createStackNavigator();
 
 export default function App({ navigation }) {
-  const [isSignedIn, setIsSignedIn] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  const initializeFirebase = () => {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    } else {
+      firebase.app();
+    }
+  };
+
+  const initializeFirebaseFn = initializeFirebase();
+
+  const [initializeFirebaseVar, setInitializeFirebaseVar] =
+    useState(initializeFirebaseFn);
 
   const signIn = (a) => {
     setIsSignedIn(a);
@@ -42,12 +56,12 @@ export default function App({ navigation }) {
           options={{ title: "Welcome", headerShown: false }}
         />
         <Stack.Screen
-          name="SignUp"
-          component={SignUpScreen}
+          name="Login"
+          component={LoginScreen}
           options={{
-            title: "SignUp",
+            title: "Login",
             headerShown: true,
-            // headerBackTitleVisible: false,
+            headerBackTitleVisible: false,
           }}
         />
       </Stack.Navigator>
