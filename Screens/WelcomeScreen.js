@@ -27,15 +27,9 @@ export default function WelcomeScreen({ navigation }) {
         <View style={styles.signInSignUpButtonContainer}>
           <CustomButton
             style={styles.signInButton}
-            // onPress={setIsSignedIn(true)}
+            onPress={() => navigation.navigate("Login")}
           >
             <Text style={styles.signInButtonText}>Login</Text>
-          </CustomButton>
-          <CustomButton
-            style={styles.signInButton}
-            onPress={() => navigation.navigate("SignUp")}
-          >
-            <Text style={styles.signInButtonText}>Sign Up</Text>
           </CustomButton>
         </View>
       </View>
@@ -50,7 +44,9 @@ export const styles = StyleSheet.create({
   logoContainer: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
+    marginBottom: "5%",
+    padding: 8,
   },
   title: {
     fontSize: 32,
