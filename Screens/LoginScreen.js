@@ -79,6 +79,7 @@ export default function LoginScreen({ navigation }) {
             placeholder="abc@example.com"
             keyboardType="email-address"
             onChangeText={(text) => setEmail(text)}
+            autoCapitalize={false}
           />
           <TextInput
             style={[styles.textInput]}
