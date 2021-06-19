@@ -9,6 +9,7 @@ import LoginScreen from "./Screens/LoginScreen";
 import SettingsScreen from "./Screens/SettingsScreen";
 import * as firebase from "firebase";
 import { firebaseConfig } from "./Config/config";
+import "firebase/auth";
 
 const Stack = createStackNavigator();
 
