@@ -14,7 +14,7 @@ import "firebase/auth";
 const Stack = createStackNavigator();
 
 export default function App({ navigation }) {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(true);
 
   const initializeFirebase = () => {
     if (!firebase.apps.length) {
