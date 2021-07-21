@@ -49,12 +49,12 @@ export default function HomeScreen({ navigation }) {
       <SafeAreaView />
       <View style={styles.header}>
         <Text style={styles.headerText}>Bibliophilia</Text>
-        <Button
+        {/* <Button
           onPress={() => navigation.navigate("Settings")}
           style={styles.checkMarkView}
         >
           <Ionicons name="ios-checkmark" color="white" size={30}></Ionicons>
-        </Button>
+        </Button> */}
       </View>
       <View style={styles.body}>
         {isAddBookBarVisible && (
