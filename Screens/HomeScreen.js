@@ -33,12 +33,14 @@ export default function HomeScreen({ navigation }) {
   };
 
   const addBook = () => {
+    const emptyString = "";
     const checkIfBookAlreadyExists = _.includes(books, newBook);
-    if (!checkIfBookAlreadyExists) {
+    if (newBook !== emptyString && !checkIfBookAlreadyExists) {
       setBooks([...books, newBook]);
       setTotalCount((prevTotalCount) => prevTotalCount + 1);
       setReadingCount((prevReadingCount) => prevReadingCount + 1);
     }
+    setNewBook("");
   };
 
   const markAsRead = (selectedBook, index) => {
@@ -68,6 +70,7 @@ export default function HomeScreen({ navigation }) {
               placeholder="Enter Book Name"
               placeholderTextColor="grey"
               onChangeText={(text) => setNewBook(text)}
+              value={newBook}
             ></TextInput>
             <Button onPress={addBook} style={styles.checkMarkView}>
               <Ionicons name="ios-checkmark" color="white" size={30}></Ionicons>
