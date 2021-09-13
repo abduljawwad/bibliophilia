@@ -14,13 +14,14 @@ import BooksList from "../Components/BooksList";
 import Button from "../Components/Button";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
+import _ from "lodash";
 
 export default function HomeScreen({ navigation }) {
   const [totalCount, setTotalCount] = useState(0);
   const [readingCount, setReadingCount] = useState(0);
   const [readCount, setReadCount] = useState(0);
   const [isAddBookBarVisible, setIsAddBookBarVisible] = useState(false);
-  const [book, setBook] = useState("");
+  const [newBook, setNewBook] = useState("");
   const [books, setBooks] = useState([]);
 
   const showAddBookBar = () => {
@@ -32,9 +33,12 @@ export default function HomeScreen({ navigation }) {
   };
 
   const addBook = () => {
-    setBooks([...books, book]);
-    setTotalCount((prevTotalCount) => prevTotalCount + 1);
-    setReadingCount((prevReadingCount) => prevReadingCount + 1);
+    const checkIfBookAlreadyExists = _.includes(books, newBook);
+    if (!checkIfBookAlreadyExists) {
+      setBooks([...books, newBook]);
+      setTotalCount((prevTotalCount) => prevTotalCount + 1);
+      setReadingCount((prevReadingCount) => prevReadingCount + 1);
+    }
   };
 
   const markAsRead = (selectedBook, index) => {
@@ -63,7 +67,7 @@ export default function HomeScreen({ navigation }) {
               style={styles.addBookBarTextInput}
               placeholder="Enter Book Name"
               placeholderTextColor="grey"
-              onChangeText={(text) => setBook(text)}
+              onChangeText={(text) => setNewBook(text)}
             ></TextInput>
             <Button onPress={addBook} style={styles.checkMarkView}>
               <Ionicons name="ios-checkmark" color="white" size={30}></Ionicons>
