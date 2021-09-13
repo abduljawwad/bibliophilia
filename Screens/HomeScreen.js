@@ -33,8 +33,8 @@ export default function HomeScreen({ navigation }) {
   };
 
   const addBook = () => {
-    const checkBooks = _.includes(books, newBook);
-    if (!checkBooks) {
+    const checkIfBookAlreadyExists = _.includes(books, newBook);
+    if (!checkIfBookAlreadyExists) {
       setBooks([...books, newBook]);
       setTotalCount((prevTotalCount) => prevTotalCount + 1);
       setReadingCount((prevReadingCount) => prevReadingCount + 1);
