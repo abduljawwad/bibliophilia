@@ -23,6 +23,17 @@ export default function HomeScreen({ navigation }) {
   const [isAddBookBarVisible, setIsAddBookBarVisible] = useState(false);
   const [newBook, setNewBook] = useState("");
   const [books, setBooks] = useState([]);
+  console.log("🚀 ~ file: HomeScreen.js ~ line 26 ~ HomeScreen ~ books", books);
+  const [booksReading, setBooksReading] = useState([]);
+  console.log(
+    "🚀 ~ file: HomeScreen.js ~ line 28 ~ HomeScreen ~ booksReading",
+    booksReading
+  );
+  const [completedBooks, setCompletedBooks] = useState([]);
+  console.log(
+    "🚀 ~ file: HomeScreen.js ~ line 30 ~ HomeScreen ~ completedBooks",
+    completedBooks
+  );
   const [bookRead, setBookRead] = useState(false);
 
   const showAddBookBar = () => {
@@ -38,6 +49,7 @@ export default function HomeScreen({ navigation }) {
     const checkIfBookAlreadyExists = _.includes(books, newBook);
     if (newBook !== emptyString && !checkIfBookAlreadyExists) {
       setBooks([...books, newBook]);
+      setBooksReading([...booksReading, newBook]);
       setTotalCount((prevTotalCount) => prevTotalCount + 1);
       setReadingCount((prevReadingCount) => prevReadingCount + 1);
     }
@@ -46,7 +58,9 @@ export default function HomeScreen({ navigation }) {
 
   const markAsRead = (selectedBook, index) => {
     let newBooksList = books.filter((book) => book !== selectedBook);
-    setBooks(newBooksList);
+    setBooksReading(newBooksList);
+    let completedBook = books.filter((book) => book === selectedBook);
+    setCompletedBooks([...completedBooks, ...completedBook]);
     setReadingCount((prevReadingCount) => prevReadingCount - 1);
     setReadCount((prevReadCount) => prevReadCount + 1);
     setBookRead(true);
