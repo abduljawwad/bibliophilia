@@ -23,6 +23,7 @@ export default function HomeScreen({ navigation }) {
   const [isAddBookBarVisible, setIsAddBookBarVisible] = useState(false);
   const [newBook, setNewBook] = useState("");
   const [books, setBooks] = useState([]);
+  const [bookRead, setBookRead] = useState(false);
 
   const showAddBookBar = () => {
     setIsAddBookBarVisible(true);
@@ -48,6 +49,7 @@ export default function HomeScreen({ navigation }) {
     setBooks(newBooksList);
     setReadingCount((prevReadingCount) => prevReadingCount - 1);
     setReadCount((prevReadCount) => prevReadCount + 1);
+    setBookRead(true);
   };
 
   return (
@@ -55,12 +57,6 @@ export default function HomeScreen({ navigation }) {
       <SafeAreaView />
       <View style={styles.header}>
         <Text style={styles.headerText}>Bibliophilia</Text>
-        {/* <Button
-          onPress={() => navigation.navigate("Settings")}
-          style={styles.checkMarkView}
-        >
-          <Ionicons name="ios-checkmark" color="white" size={30}></Ionicons>
-        </Button> */}
       </View>
       <View style={styles.body}>
         {isAddBookBarVisible && (
@@ -99,7 +95,7 @@ export default function HomeScreen({ navigation }) {
         </Button>
       </View>
       <View style={styles.footer}>
-        <Count title="Total" count={totalCount} />
+        <Count title="All Books" count={totalCount} />
         <Count title="Reading" count={readingCount} />
         <Count title="Read" count={readCount} />
       </View>
