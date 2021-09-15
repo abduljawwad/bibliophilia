@@ -30,7 +30,7 @@ export default function BooksList(props) {
 
   const listEmptyView = (
     <View style={styles.listEmptyView}>
-      <Text style={styles.listEmptyText}>No books added to the list yet</Text>
+      <Text style={styles.listEmptyText}>No books in reading list!</Text>
     </View>
   );
 
