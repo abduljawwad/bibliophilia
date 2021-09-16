@@ -7,9 +7,7 @@ export default function BookInputForm({ addFormValues }) {
     <View style={styles.container}>
       <Formik
         initialValues={{ title: "", author: "", genre: "" }}
-        onSubmit={(values) => {
-          addFormValues(values);
-        }}
+        onSubmit={(values) => addFormValues(values)}
       >
         {(props) => (
           <View>

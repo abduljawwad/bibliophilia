@@ -31,15 +31,7 @@ export default function HomeScreen({ navigation }) {
   const [books, setBooks] = useState([]);
   console.log("🚀 ~ file: HomeScreen.js ~ line 32 ~ HomeScreen ~ books", books);
   const [booksReading, setBooksReading] = useState([]);
-  console.log(
-    "🚀 ~ file: HomeScreen.js ~ line 34 ~ HomeScreen ~ booksReading",
-    booksReading
-  );
   const [completedBooks, setCompletedBooks] = useState([]);
-  console.log(
-    "🚀 ~ file: HomeScreen.js ~ line 36 ~ HomeScreen ~ completedBooks",
-    completedBooks
-  );
   const [bookRead, setBookRead] = useState(false);
 
   const showAddBookBar = () => {
@@ -59,7 +51,6 @@ export default function HomeScreen({ navigation }) {
       setTotalCount((prevTotalCount) => prevTotalCount + 1);
       setReadingCount((prevReadingCount) => prevReadingCount + 1);
     }
-    setNewBook("");
   };
 
   const markAsRead = (selectedBook, index) => {
@@ -73,9 +64,16 @@ export default function HomeScreen({ navigation }) {
   };
 
   const addFormValues = (formValues) => {
-    setNewBook(formValues.title);
-    addBook();
+    console.log(
+      "🚀 ~ file: HomeScreen.js ~ line 67 ~ addFormValues ~ formValues",
+      formValues
+    );
+    setNewBook((newBook) => formValues.title);
   };
+
+  useEffect(() => {
+    addBook();
+  }, [newBook]);
 
   return (
     <View style={styles.container}>
