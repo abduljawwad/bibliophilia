@@ -8,6 +8,7 @@ import {
   Image,
 } from "react-native";
 import Button from "./Button";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function BooksList(props) {
   const { books, markAsRead } = props;
@@ -19,9 +20,21 @@ export default function BooksList(props) {
         </View>
         <Text style={styles.bookTitle}>{item.title}</Text>
       </View>
-      <Button style={styles.markAsReadView} onPress={() => markAsRead(item)}>
-        <Text style={styles.markAsReadText}>Mark as Read</Text>
-      </Button>
+      {(item.readingFlag && (
+        <Button style={styles.markAsReadView} onPress={() => markAsRead(item)}>
+          <Text style={styles.markAsReadText}>Mark as Read</Text>
+        </Button>
+      )) ||
+        (!item.readingFlag && (
+          <Button style={styles.markAsReadView}>
+            <Ionicons
+              name="ios-checkmark"
+              color="white"
+              size={30}
+              style={styles.markAsReadText}
+            ></Ionicons>
+          </Button>
+        ))}
     </View>
   );
 
