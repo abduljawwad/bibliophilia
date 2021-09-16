@@ -11,19 +11,25 @@ import {
   Modal,
 } from "react-native";
 import Count from "../Components/Count";
-import BooksList from "../Components/BooksList";
+// import BooksList from "../Components/BooksList";
 import Button from "../Components/Button";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
 import _ from "lodash";
 import BookInputForm from "./BookInputForm";
+import { v4 as uuidv4 } from "uuid";
 
 export default function HomeScreen({ navigation }) {
   const [totalCount, setTotalCount] = useState(0);
   const [readingCount, setReadingCount] = useState(0);
   const [readCount, setReadCount] = useState(0);
   const [isAddBookBarVisible, setIsAddBookBarVisible] = useState(false);
-  const [newBook, setNewBook] = useState("");
+  const [newBook, setNewBook] = useState({
+    id: uuidv4(),
+    title: "",
+    author: "",
+    genre: "",
+  });
   console.log(
     "🚀 ~ file: HomeScreen.js ~ line 27 ~ HomeScreen ~ newBook",
     newBook
@@ -44,8 +50,12 @@ export default function HomeScreen({ navigation }) {
 
   const addBook = () => {
     const emptyString = "";
-    const checkIfBookAlreadyExists = _.includes(books, newBook);
-    if (newBook !== emptyString && !checkIfBookAlreadyExists) {
+    const checkIfBookAlreadyExists = _.get(newBook, "title");
+    console.log(
+      "🚀 ~ file: HomeScreen.js ~ line 54 ~ addBook ~ checkIfBookAlreadyExists",
+      checkIfBookAlreadyExists
+    );
+    if (newBook !== emptyString && checkIfBookAlreadyExists !== "") {
       setBooks([...books, newBook]);
       setBooksReading([...booksReading, newBook]);
       setTotalCount((prevTotalCount) => prevTotalCount + 1);
@@ -64,11 +74,10 @@ export default function HomeScreen({ navigation }) {
   };
 
   const addFormValues = (formValues) => {
-    console.log(
-      "🚀 ~ file: HomeScreen.js ~ line 67 ~ addFormValues ~ formValues",
-      formValues
-    );
-    setNewBook((newBook) => formValues.title);
+    setNewBook((newBook) => ({
+      ...formValues,
+      id: uuidv4(),
+    }));
   };
 
   useEffect(() => {
@@ -82,23 +91,6 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.headerText}>Bibliophilia</Text>
       </View>
       <View style={styles.body}>
-        {/* {isAddBookBarVisible && (
-          <View style={styles.addBookBarView}>
-            <TextInput
-              style={styles.addBookBarTextInput}
-              placeholder="Enter Book Name"
-              placeholderTextColor="grey"
-              onChangeText={(text) => setNewBook(text)}
-              value={newBook}
-            ></TextInput>
-            <Button onPress={addBook} style={styles.checkMarkView}>
-              <Ionicons name="ios-checkmark" color="white" size={30}></Ionicons>
-            </Button>
-            <Button onPress={hideAddBookBar} style={styles.closeMarkView}>
-              <Ionicons name="ios-close" color="white" size={30}></Ionicons>
-            </Button>
-          </View>
-        )} */}
         <Modal visible={isAddBookBarVisible} animationType="slide">
           <SafeAreaView />
           <View style={styles.contentView}>
@@ -115,10 +107,10 @@ export default function HomeScreen({ navigation }) {
           </View>
           <SafeAreaView />
         </Modal>
-        <BooksList
+        {/* <BooksList
           books={books}
           markAsRead={(item, index) => markAsRead(item, index)}
-        />
+        /> */}
         <Button
           style={[
             styles.plusButtonView,
