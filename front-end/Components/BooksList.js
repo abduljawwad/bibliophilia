@@ -11,18 +11,15 @@ import Button from "./Button";
 
 export default function BooksList(props) {
   const { books, markAsRead } = props;
-  const itemsList = ({ item, index }) => (
+  const itemsList = ({ item }) => (
     <View style={styles.booksList}>
       <View style={styles.bookItem}>
         <View style={styles.imagecontainer}>
           <Image style={styles.image}></Image>
         </View>
-        <Text style={styles.bookTitle}>{item}</Text>
+        <Text style={styles.bookTitle}>{item.title}</Text>
       </View>
-      <Button
-        style={styles.markAsReadView}
-        onPress={() => markAsRead(item, index)}
-      >
+      <Button style={styles.markAsReadView} onPress={() => markAsRead(item)}>
         <Text style={styles.markAsReadText}>Mark as Read</Text>
       </Button>
     </View>
@@ -37,7 +34,7 @@ export default function BooksList(props) {
   return (
     <FlatList
       data={[...books]}
-      keyExtractor={(item, index) => index.toString()}
+      keyExtractor={(item) => item.id}
       renderItem={itemsList}
       ListEmptyComponent={listEmptyView}
     ></FlatList>

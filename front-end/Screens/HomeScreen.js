@@ -11,7 +11,7 @@ import {
   Modal,
 } from "react-native";
 import Count from "../Components/Count";
-// import BooksList from "../Components/BooksList";
+import BooksList from "../Components/BooksList";
 import Button from "../Components/Button";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
@@ -29,6 +29,7 @@ export default function HomeScreen({ navigation }) {
     title: "",
     author: "",
     genre: "",
+    readingFlag: true,
   });
   console.log(
     "🚀 ~ file: HomeScreen.js ~ line 27 ~ HomeScreen ~ newBook",
@@ -38,6 +39,10 @@ export default function HomeScreen({ navigation }) {
   console.log("🚀 ~ file: HomeScreen.js ~ line 32 ~ HomeScreen ~ books", books);
   const [booksReading, setBooksReading] = useState([]);
   const [completedBooks, setCompletedBooks] = useState([]);
+  console.log(
+    "🚀 ~ file: HomeScreen.js ~ line 42 ~ HomeScreen ~ completedBooks",
+    completedBooks
+  );
   const [bookRead, setBookRead] = useState(false);
 
   const showAddBookBar = () => {
@@ -50,12 +55,11 @@ export default function HomeScreen({ navigation }) {
 
   const addBook = () => {
     const emptyString = "";
-    const checkIfBookAlreadyExists = _.get(newBook, "title");
-    console.log(
-      "🚀 ~ file: HomeScreen.js ~ line 54 ~ addBook ~ checkIfBookAlreadyExists",
-      checkIfBookAlreadyExists
-    );
-    if (newBook !== emptyString && checkIfBookAlreadyExists !== "") {
+    const checkIfBookAlreadyExists = _.find(books, ["title", newBook.title]);
+    if (
+      newBook.title !== emptyString &&
+      typeof checkIfBookAlreadyExists !== "object"
+    ) {
       setBooks([...books, newBook]);
       setBooksReading([...booksReading, newBook]);
       setTotalCount((prevTotalCount) => prevTotalCount + 1);
@@ -63,18 +67,25 @@ export default function HomeScreen({ navigation }) {
     }
   };
 
-  const markAsRead = (selectedBook, index) => {
-    let newBooksList = books.filter((book) => book !== selectedBook);
-    setBooksReading(newBooksList);
-    let completedBook = books.filter((book) => book === selectedBook);
-    setCompletedBooks([...completedBooks, ...completedBook]);
-    setReadingCount((prevReadingCount) => prevReadingCount - 1);
-    setReadCount((prevReadCount) => prevReadCount + 1);
-    setBookRead(true);
+  const markAsRead = (selectedBook) => {
+    const checkIfBookAlreadyExists = _.find(completedBooks, [
+      "title",
+      selectedBook.title,
+    ]);
+    if (typeof checkIfBookAlreadyExists !== "object") {
+      selectedBook.readingFlag = false;
+      let newBooksList = books.filter((book) => book.id !== selectedBook.id);
+      setBooksReading(newBooksList);
+      let completedBook = books.filter((book) => book.id === selectedBook.id);
+      setCompletedBooks([...completedBooks, ...completedBook]);
+      setReadingCount((prevReadingCount) => prevReadingCount - 1);
+      setReadCount((prevReadCount) => prevReadCount + 1);
+    }
   };
 
   const addFormValues = (formValues) => {
     setNewBook((newBook) => ({
+      ...newBook,
       ...formValues,
       id: uuidv4(),
     }));
@@ -107,10 +118,7 @@ export default function HomeScreen({ navigation }) {
           </View>
           <SafeAreaView />
         </Modal>
-        {/* <BooksList
-          books={books}
-          markAsRead={(item, index) => markAsRead(item, index)}
-        /> */}
+        <BooksList books={books} markAsRead={(item) => markAsRead(item)} />
         <Button
           style={[
             styles.plusButtonView,
