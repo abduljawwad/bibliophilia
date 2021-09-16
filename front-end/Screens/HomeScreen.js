@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
+  Modal,
 } from "react-native";
 import Count from "../Components/Count";
 import BooksList from "../Components/BooksList";
@@ -15,6 +16,7 @@ import Button from "../Components/Button";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
 import _ from "lodash";
+import BookInputForm from "./BookInputForm";
 
 export default function HomeScreen({ navigation }) {
   const [totalCount, setTotalCount] = useState(0);
@@ -22,16 +24,20 @@ export default function HomeScreen({ navigation }) {
   const [readCount, setReadCount] = useState(0);
   const [isAddBookBarVisible, setIsAddBookBarVisible] = useState(false);
   const [newBook, setNewBook] = useState("");
+  console.log(
+    "🚀 ~ file: HomeScreen.js ~ line 27 ~ HomeScreen ~ newBook",
+    newBook
+  );
   const [books, setBooks] = useState([]);
-  console.log("🚀 ~ file: HomeScreen.js ~ line 26 ~ HomeScreen ~ books", books);
+  console.log("🚀 ~ file: HomeScreen.js ~ line 32 ~ HomeScreen ~ books", books);
   const [booksReading, setBooksReading] = useState([]);
   console.log(
-    "🚀 ~ file: HomeScreen.js ~ line 28 ~ HomeScreen ~ booksReading",
+    "🚀 ~ file: HomeScreen.js ~ line 34 ~ HomeScreen ~ booksReading",
     booksReading
   );
   const [completedBooks, setCompletedBooks] = useState([]);
   console.log(
-    "🚀 ~ file: HomeScreen.js ~ line 30 ~ HomeScreen ~ completedBooks",
+    "🚀 ~ file: HomeScreen.js ~ line 36 ~ HomeScreen ~ completedBooks",
     completedBooks
   );
   const [bookRead, setBookRead] = useState(false);
@@ -66,6 +72,11 @@ export default function HomeScreen({ navigation }) {
     setBookRead(true);
   };
 
+  const addFormValues = (formValues) => {
+    setNewBook(formValues.title);
+    addBook();
+  };
+
   return (
     <View style={styles.container}>
       <SafeAreaView />
@@ -73,7 +84,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.headerText}>Bibliophilia</Text>
       </View>
       <View style={styles.body}>
-        {isAddBookBarVisible && (
+        {/* {isAddBookBarVisible && (
           <View style={styles.addBookBarView}>
             <TextInput
               style={styles.addBookBarTextInput}
@@ -89,7 +100,23 @@ export default function HomeScreen({ navigation }) {
               <Ionicons name="ios-close" color="white" size={30}></Ionicons>
             </Button>
           </View>
-        )}
+        )} */}
+        <Modal visible={isAddBookBarVisible} animationType="slide">
+          <SafeAreaView />
+          <View style={styles.contentView}>
+            <Button
+              onPress={hideAddBookBar}
+              style={{
+                ...styles.closeMarkView,
+                alignSelf: "center",
+              }}
+            >
+              <Ionicons name="ios-close" color="white" size={30}></Ionicons>
+            </Button>
+            <BookInputForm addFormValues={addFormValues}></BookInputForm>
+          </View>
+          <SafeAreaView />
+        </Modal>
         <BooksList
           books={books}
           markAsRead={(item, index) => markAsRead(item, index)}
@@ -177,5 +204,10 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderTopColor: colors.borderColor,
     flexDirection: "row",
+  },
+  contentView: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
   },
 });
