@@ -15,7 +15,6 @@ import BooksList from "../Components/BooksList";
 import Button from "../Components/Button";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
-import _ from "lodash";
 import BookInputForm from "./BookInputForm";
 import { v4 as uuidv4 } from "uuid";
 
@@ -45,10 +44,6 @@ export default function HomeScreen({ navigation }) {
   );
   const [bookRead, setBookRead] = useState(false);
 
-  setTotalCount(books.length);
-  setReadingCount(booksReading.length);
-  setReadCount(completedBooks.length);
-
   const showAddBookBar = () => {
     setIsAddBookBarVisible(true);
   };
@@ -59,31 +54,28 @@ export default function HomeScreen({ navigation }) {
 
   const addBook = () => {
     const emptyString = "";
-    const checkIfBookAlreadyExists = _.find(books, ["title", newBook.title]);
+    const checkIfBookAlreadyExists = books.find(
+      (book) => book.title === newBook.title
+    );
     if (
       newBook.title !== emptyString &&
       typeof checkIfBookAlreadyExists !== "object"
     ) {
       setBooks([...books, newBook]);
       setBooksReading([...booksReading, newBook]);
-      // setTotalCount((prevTotalCount) => prevTotalCount + 1);
-      // setReadingCount((prevReadingCount) => prevReadingCount + 1);
     }
   };
 
   const markAsRead = (selectedBook) => {
-    const checkIfBookAlreadyExists = _.find(completedBooks, [
-      "title",
-      selectedBook.title,
-    ]);
+    const checkIfBookAlreadyExists = completedBooks.find(
+      (book) => book.title === selectedBook.title
+    );
     if (typeof checkIfBookAlreadyExists !== "object") {
       selectedBook.readingFlag = false;
       let newBooksList = books.filter((book) => book.id !== selectedBook.id);
       setBooksReading(newBooksList);
       let completedBook = books.filter((book) => book.id === selectedBook.id);
       setCompletedBooks([...completedBooks, ...completedBook]);
-      // setReadingCount((prevReadingCount) => prevReadingCount - 1);
-      // setReadCount((prevReadCount) => prevReadCount + 1);
     }
   };
 
@@ -95,6 +87,13 @@ export default function HomeScreen({ navigation }) {
     let updatedBooksCompleted = completedBooks.filter(
       (book) => book.id !== selectedBook.id
     );
+    setNewBook({
+      id: uuidv4(),
+      title: "",
+      author: "",
+      genre: "",
+      readingFlag: true,
+    });
     setBooks(updatedBooks);
     setBooksReading(updatedBooksReading);
     setCompletedBooks(updatedBooksCompleted);
@@ -110,7 +109,16 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     addBook();
-  }, [newBook]);
+    setTotalCount(books.length);
+    setReadingCount(booksReading.length);
+    setReadCount(completedBooks.length);
+  }, [newBook, booksReading, completedBooks, books]);
+
+  useEffect(() => {
+    setTotalCount(books.length);
+    setReadingCount(booksReading.length);
+    setReadCount(completedBooks.length);
+  }, [booksReading, completedBooks, books]);
 
   return (
     <View style={styles.container}>
@@ -181,23 +189,6 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
-  },
-  addBookBarView: {
-    flexDirection: "row",
-    backgroundColor: colors.borderColor,
-    height: 50,
-    justifyContent: "flex-end",
-  },
-  addBookBarTextInput: {
-    flex: 1,
-    paddingLeft: 5,
-  },
-  checkMarkView: {
-    height: 50,
-    width: 50,
-    backgroundColor: colors.checkMarkBgColor,
-    alignItems: "center",
-    justifyContent: "center",
   },
   closeMarkView: {
     height: 50,

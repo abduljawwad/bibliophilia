@@ -10,6 +10,7 @@ import {
 import Button from "./Button";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
+import _ from "lodash";
 
 export default function BooksList(props) {
   const { books, markAsRead, deleteBookEntry } = props;
