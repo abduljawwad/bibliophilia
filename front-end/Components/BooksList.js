@@ -10,7 +10,6 @@ import {
 import Button from "./Button";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
-import _ from "lodash";
 
 export default function BooksList(props) {
   const { books, markAsRead, deleteBookEntry } = props;
@@ -20,48 +19,52 @@ export default function BooksList(props) {
         <View style={styles.imagecontainer}>
           <Image style={styles.image}></Image>
         </View>
-        <Text style={styles.bookTitle}>{item.title}</Text>
-      </View>
-      {(item.readingFlag && (
-        <View>
-          <Button
-            style={styles.markAsReadView}
-            onPress={() => markAsRead(item)}
-          >
-            <Text style={styles.markAsReadText}>Mark as Read</Text>
-          </Button>
-          <Button
-            style={{
-              ...styles.markAsReadView,
-              backgroundColor: colors.closeMarkBgColor,
-            }}
-            onPress={() => deleteBookEntry(item)}
-          >
-            <Text style={styles.markAsReadText}>Delete Book</Text>
-          </Button>
+        <View style={styles.titleContainer}>
+          <Text style={styles.bookTitle}>{item.title}</Text>
         </View>
-      )) ||
-        (!item.readingFlag && (
-          <View>
-            <Button style={styles.markAsReadView}>
-              <Ionicons
-                name="ios-checkmark"
-                color="white"
-                size={30}
-                style={styles.markAsReadText}
-              ></Ionicons>
-            </Button>
-            <Button
-              style={{
-                ...styles.markAsReadView,
-                backgroundColor: colors.closeMarkBgColor,
-              }}
-              onPress={() => deleteBookEntry(item)}
-            >
-              <Text style={styles.markAsReadText}>Delete Book</Text>
-            </Button>
-          </View>
-        ))}
+        <View style={styles.buttonContainer}>
+          {(item.readingFlag && (
+            <View>
+              <Button
+                style={styles.markAsReadView}
+                onPress={() => markAsRead(item)}
+              >
+                <Text style={styles.markAsReadText}>Mark as Read</Text>
+              </Button>
+              <Button
+                style={{
+                  ...styles.markAsReadView,
+                  backgroundColor: colors.closeMarkBgColor,
+                }}
+                onPress={() => deleteBookEntry(item)}
+              >
+                <Text style={styles.markAsReadText}>Delete Book</Text>
+              </Button>
+            </View>
+          )) ||
+            (!item.readingFlag && (
+              <View>
+                <Button style={styles.markAsReadView}>
+                  <Ionicons
+                    name="ios-checkmark"
+                    color="white"
+                    size={30}
+                    style={styles.markAsReadText}
+                  ></Ionicons>
+                </Button>
+                <Button
+                  style={{
+                    ...styles.markAsReadView,
+                    backgroundColor: colors.closeMarkBgColor,
+                  }}
+                  onPress={() => deleteBookEntry(item)}
+                >
+                  <Text style={styles.markAsReadText}>Delete Book</Text>
+                </Button>
+              </View>
+            ))}
+        </View>
+      </View>
     </View>
   );
 
@@ -94,27 +97,33 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     flex: 1,
-    justifyContent: "center",
   },
   imagecontainer: {
-    flex: 1,
-    // borderWidth: 1,
     borderRadius: 10,
     marginLeft: 10,
+    width: 75,
   },
   image: {
     flex: 1,
-    height: 70,
-    width: 70,
     borderWidth: 1,
     borderRadius: 10,
   },
+  titleContainer: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+  },
   bookTitle: {
-    flex: 3,
-    paddingLeft: 20,
+    flex: 1,
+    paddingLeft: 8,
+    paddingRight: 5,
     fontWeight: "500",
     fontSize: 16,
-    alignSelf: "center",
+    alignSelf: "flex-start",
+  },
+  buttonContainer: {
+    width: 100,
+    marginRight: 10,
   },
   markAsReadView: {
     backgroundColor: "#a5deba",
