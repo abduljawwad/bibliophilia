@@ -111,15 +111,15 @@ const styles = StyleSheet.create({
   titleContainer: {
     flex: 1,
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
   },
   bookTitle: {
     flex: 1,
     paddingLeft: 8,
     paddingRight: 5,
-    fontWeight: "500",
+    fontWeight: "400",
     fontSize: 16,
-    alignSelf: "flex-start",
+    alignSelf: "center",
   },
   buttonContainer: {
     width: 100,
