@@ -9,9 +9,10 @@ import {
 } from "react-native";
 import Button from "./Button";
 import { Ionicons } from "@expo/vector-icons";
+import colors from "../assets/colors";
 
 export default function BooksList(props) {
-  const { books, markAsRead } = props;
+  const { books, markAsRead, deleteBookEntry } = props;
   const itemsList = ({ item }) => (
     <View style={styles.booksList}>
       <View style={styles.bookItem}>
@@ -21,19 +22,44 @@ export default function BooksList(props) {
         <Text style={styles.bookTitle}>{item.title}</Text>
       </View>
       {(item.readingFlag && (
-        <Button style={styles.markAsReadView} onPress={() => markAsRead(item)}>
-          <Text style={styles.markAsReadText}>Mark as Read</Text>
-        </Button>
+        <View>
+          <Button
+            style={styles.markAsReadView}
+            onPress={() => markAsRead(item)}
+          >
+            <Text style={styles.markAsReadText}>Mark as Read</Text>
+          </Button>
+          <Button
+            style={{
+              ...styles.markAsReadView,
+              backgroundColor: colors.closeMarkBgColor,
+            }}
+            onPress={() => deleteBookEntry(item)}
+          >
+            <Text style={styles.markAsReadText}>Delete Book</Text>
+          </Button>
+        </View>
       )) ||
         (!item.readingFlag && (
-          <Button style={styles.markAsReadView}>
-            <Ionicons
-              name="ios-checkmark"
-              color="white"
-              size={30}
-              style={styles.markAsReadText}
-            ></Ionicons>
-          </Button>
+          <View>
+            <Button style={styles.markAsReadView}>
+              <Ionicons
+                name="ios-checkmark"
+                color="white"
+                size={30}
+                style={styles.markAsReadText}
+              ></Ionicons>
+            </Button>
+            <Button
+              style={{
+                ...styles.markAsReadView,
+                backgroundColor: colors.closeMarkBgColor,
+              }}
+              onPress={() => deleteBookEntry(item)}
+            >
+              <Text style={styles.markAsReadText}>Delete Book</Text>
+            </Button>
+          </View>
         ))}
     </View>
   );
@@ -85,16 +111,16 @@ const styles = StyleSheet.create({
   bookTitle: {
     flex: 3,
     paddingLeft: 20,
-    paddingTop: 1,
     fontWeight: "500",
     fontSize: 16,
+    alignSelf: "center",
   },
   markAsReadView: {
     backgroundColor: "#a5deba",
     justifyContent: "center",
     alignItems: "center",
     width: 100,
-    height: 50,
+    height: 35,
     marginRight: 10,
   },
   markAsReadText: { paddingRight: 5, color: "white" },

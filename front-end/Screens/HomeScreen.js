@@ -45,6 +45,10 @@ export default function HomeScreen({ navigation }) {
   );
   const [bookRead, setBookRead] = useState(false);
 
+  setTotalCount(books.length);
+  setReadingCount(booksReading.length);
+  setReadCount(completedBooks.length);
+
   const showAddBookBar = () => {
     setIsAddBookBarVisible(true);
   };
@@ -62,8 +66,8 @@ export default function HomeScreen({ navigation }) {
     ) {
       setBooks([...books, newBook]);
       setBooksReading([...booksReading, newBook]);
-      setTotalCount((prevTotalCount) => prevTotalCount + 1);
-      setReadingCount((prevReadingCount) => prevReadingCount + 1);
+      // setTotalCount((prevTotalCount) => prevTotalCount + 1);
+      // setReadingCount((prevReadingCount) => prevReadingCount + 1);
     }
   };
 
@@ -78,9 +82,22 @@ export default function HomeScreen({ navigation }) {
       setBooksReading(newBooksList);
       let completedBook = books.filter((book) => book.id === selectedBook.id);
       setCompletedBooks([...completedBooks, ...completedBook]);
-      setReadingCount((prevReadingCount) => prevReadingCount - 1);
-      setReadCount((prevReadCount) => prevReadCount + 1);
+      // setReadingCount((prevReadingCount) => prevReadingCount - 1);
+      // setReadCount((prevReadCount) => prevReadCount + 1);
     }
+  };
+
+  const deleteBookEntry = (selectedBook) => {
+    let updatedBooks = books.filter((book) => book.id !== selectedBook.id);
+    let updatedBooksReading = booksReading.filter(
+      (book) => book.id !== selectedBook.id
+    );
+    let updatedBooksCompleted = completedBooks.filter(
+      (book) => book.id !== selectedBook.id
+    );
+    setBooks(updatedBooks);
+    setBooksReading(updatedBooksReading);
+    setCompletedBooks(updatedBooksCompleted);
   };
 
   const addFormValues = (formValues) => {
@@ -118,7 +135,11 @@ export default function HomeScreen({ navigation }) {
           </View>
           <SafeAreaView />
         </Modal>
-        <BooksList books={books} markAsRead={(item) => markAsRead(item)} />
+        <BooksList
+          books={books}
+          markAsRead={(item) => markAsRead(item)}
+          deleteBookEntry={(item) => deleteBookEntry(item)}
+        />
         <Button
           style={[
             styles.plusButtonView,
