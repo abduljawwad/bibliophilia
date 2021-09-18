@@ -15,7 +15,7 @@ import BooksList from "../Components/BooksList";
 import Button from "../Components/Button";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
-import BookInputForm from "./BookInputForm";
+import BookInputForm from "../Components/BookInputForm";
 import { v4 as uuidv4 } from "uuid";
 
 export default function HomeScreen({ navigation }) {
