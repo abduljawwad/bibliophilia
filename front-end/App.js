@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import WelcomeScreen from "./Screens/WelcomeScreen";
 import HomeScreen from "./Screens/HomeScreen";
@@ -11,7 +11,7 @@ import * as firebase from "firebase";
 import { firebaseConfig } from "./Config/config";
 import "firebase/auth";
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App({ navigation }) {
   const [isSignedIn, setIsSignedIn] = useState(true);
