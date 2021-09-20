@@ -13,7 +13,6 @@ import colors from "../assets/colors";
 
 export default function BooksList(props) {
   const { books, booksReading, markAsRead, deleteBookEntry } = props;
-  console.log("🚀 ~ file: BooksList.js ~ line 16 ~ BooksList ~ props", props);
 
   const itemsList = ({ item }) => (
     <View style={styles.booksList}>
