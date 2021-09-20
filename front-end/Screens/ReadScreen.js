@@ -1,14 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Modal } from "react-native";
-import Count from "../Components/Count";
 import BooksList from "../Components/BooksList";
-import Button from "../Components/Button";
-import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
-import BookInputForm from "../Components/BookInputForm";
 import { BooksContext } from "../Context/BooksContextProvider";
 
-export default function HomeScreen({ navigation }) {
+export default function ReadingScreen({ navigation }) {
   const BooksContextValue = React.useContext(BooksContext);
 
   const {
@@ -43,45 +39,11 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.headerText}>Bibliophilia</Text>
       </View>
       <View style={styles.body}>
-        <Modal visible={isAddBookBarVisible} animationType="slide">
-          <SafeAreaView />
-          <View style={styles.contentView}>
-            <Button
-              onPress={hideAddBookBar}
-              style={{
-                ...styles.closeMarkView,
-                alignSelf: "center",
-              }}
-            >
-              <Ionicons name="ios-close" color="white" size={30}></Ionicons>
-            </Button>
-            <BookInputForm addFormValues={addFormValues}></BookInputForm>
-          </View>
-          <SafeAreaView />
-        </Modal>
         <BooksList
-          books={books}
+          books={completedBooks}
           markAsRead={(item) => markAsRead(item)}
           deleteBookEntry={(item) => deleteBookEntry(item)}
         />
-        <Button
-          style={[
-            styles.plusButtonView,
-            {
-              position: "absolute",
-              bottom: 20,
-              right: 20,
-            },
-          ]}
-          onPress={showAddBookBar}
-        >
-          <Text style={styles.plusButton}>+</Text>
-        </Button>
-      </View>
-      <View style={styles.footer}>
-        <Count title="All Books" count={totalCount} />
-        <Count title="Reading" count={readingCount} />
-        <Count title="Read" count={readCount} />
       </View>
       <SafeAreaView />
     </View>
