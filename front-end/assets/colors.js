@@ -7,6 +7,7 @@ const colors = {
   borderColor: "#E9E9E9",
   mainBgColor: "#fff",
   logoBgColor: "#bada55",
+  btnBgColor: '#8AC111'
 };
 
 export default colors;

@@ -98,8 +98,8 @@ export default function LoginScreen({ navigation }) {
             onPress={() => onSignIn()}
           >
             <View style={styles.googleButtonView}>
-              <Ionicons name="logo-google" size={20} color="black" style={styles.googleIcon} />
-              <Text style={{ ...styles.signInButtonText, width: '80%', color: 'black' }}>Sign in with google</Text>
+              <Ionicons name="logo-google" size={20} color="#fff" style={styles.googleIcon} />
+              <Text style={{ ...styles.signInButtonText, width: '80%', color: '#fff' }}>Sign in with google</Text>
             </View>
           </CustomButton>
           <View style={styles.line}></View>
@@ -165,7 +165,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 8,
     width: '90%',
-    backgroundColor: colors.logoBgColor,
+    backgroundColor: colors.btnBgColor,
     borderRadius: 50,
     marginBottom: '2%',
     alignItems: 'center',
@@ -173,7 +173,8 @@ export const styles = StyleSheet.create({
   },
   signInButtonText: {
     fontSize: 20,
-    fontWeight: '400',
+    fontWeight: '500',
+    color: '#fff'
   },
   activityIndicatorContainer: {
     alignItems: 'center',
