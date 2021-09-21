@@ -60,6 +60,14 @@ export default function LoginScreen({ navigation }) {
             <ActivityIndicator size="large" color={colors.logoBgColor} />
           </View>
         ) : null}
+        <View style={styles.logoContainer}>
+          <Ionicons
+            name="ios-book"
+            size={150}
+            color={colors.btnBgColor}
+          ></Ionicons>
+          <Text style={styles.titleFrom}>Bibliophilia</Text>
+        </View>
         <View style={styles.textInputContainer}>
           <Text style={styles.labelText}>Email Address</Text>
           <View style={styles.iconAndInputcontainer}>
@@ -115,6 +123,7 @@ export default function LoginScreen({ navigation }) {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.mainBgColor
   },
   textInputContainer: {
     flex: 1,
@@ -156,7 +165,7 @@ export const styles = StyleSheet.create({
     fontWeight: '300',
   },
   signInSignUpButtonContainer: {
-    flex: 2,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginHorizontal: '10%',
@@ -195,5 +204,16 @@ export const styles = StyleSheet.create({
   },
   googleIcon: {
     width: '20%',
+  },
+  logoContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginBottom: "5%",
+    padding: 8,
+  },
+  titleFrom: {
+    fontSize: 32,
+    fontWeight: "300",
   },
 });

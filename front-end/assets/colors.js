@@ -5,9 +5,10 @@ const colors = {
   textInputBgColor: "#ececec",
   textPlaceHolderBgColor: "grey",
   borderColor: "#E9E9E9",
-  mainBgColor: "#fff",
-  logoBgColor: "#bada55",
-  btnBgColor: '#8AC111'
+  mainBgColor: "#E6E6FA",
+  // logoBgColor: "#bada55",
+  logoBgColor: "#9370DB",
+  btnBgColor: '#9370DB'
 };
 
 export default colors;
