@@ -69,7 +69,7 @@ export default function LoginScreen({ navigation }) {
               placeholder="abc@example.com"
               keyboardType="email-address"
               onChangeText={(text) => setEmail(text)}
-              autoCapitalize={false}
+              autoCapitalize='none'
             />
           </View>
           <Text style={styles.labelText}>Password</Text>
@@ -80,7 +80,7 @@ export default function LoginScreen({ navigation }) {
               placeholder="Enter Password"
               secureTextEntry
               onChangeText={(text) => setPassword(text)}
-              autoCapitalize={false}
+              autoCapitalize='none'
             />
           </View>
         </View>
@@ -89,12 +89,17 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.signInButtonText}>Login</Text>
           </CustomButton>
           <CustomButton
-            style={{ ...styles.signInButton, justifyContent: 'center', alignItems: 'flex-start' }}
+            style={{
+              ...styles.signInButton,
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+              backgroundColor: '#428fff',
+            }}
             onPress={() => onSignIn()}
           >
             <View style={styles.googleButtonView}>
               <Ionicons name="logo-google" size={20} color="black" style={styles.googleIcon} />
-              <Text style={{ ...styles.signInButtonText, width: '80%' }}>Sign In with Google</Text>
+              <Text style={{ ...styles.signInButtonText, width: '80%', color: 'black' }}>Sign in with google</Text>
             </View>
           </CustomButton>
           <View style={styles.line}></View>
