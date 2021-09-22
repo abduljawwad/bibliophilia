@@ -79,9 +79,13 @@ export default function LoginScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.signInSignUpButtonContainer}>
+        <CustomButton style={styles.signInButton} onPress={() => onSignIn()}>
+            <Text style={styles.signInButtonText}>Login</Text>
+          </CustomButton>
+          <View style={styles.line}></View>  
           <View style={styles.signupContainer}>
           <Text style={styles.signupText}>Already have an account?</Text>
-          <CustomButton style = {styles.signupButton} onPress={() => {}}>
+          <CustomButton style = {styles.signupButton} onPress={() => {navigation.navigate('Login')}}>
               <Text style={styles.signupBtnText}> Sign in</Text>
           </CustomButton>
           </View>
@@ -139,6 +143,27 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginHorizontal: '10%',
+  },
+  signInButton: {
+    borderWidth: 1,
+    padding: 8,
+    width: '90%',
+    backgroundColor: colors.btnBgColor,
+    borderRadius: 50,
+    marginBottom: '2%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  signInButtonText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#fff'
+  },
+  line: {
+    height: 1,
+    width: '85%',
+    backgroundColor: 'black',
+    margin: '5%',
   },
   activityIndicatorContainer: {
     alignItems: 'center',

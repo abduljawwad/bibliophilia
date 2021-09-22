@@ -120,7 +120,7 @@ export default function LoginScreen({ navigation }) {
           <View style={styles.line}></View>
           <View style={styles.signupContainer}>
           <Text style={styles.signupText}>Don't have an account already?</Text>
-          <CustomButton style = {styles.signupButton} onPress={() => {}}>
+          <CustomButton style = {styles.signupButton} onPress={() => {navigation.navigate('Signup')}}>
               <Text style={styles.signupBtnText}> Sign up</Text>
           </CustomButton>
           </View>
