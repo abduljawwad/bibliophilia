@@ -80,7 +80,7 @@ export default function LoginScreen({ navigation }) {
         </View>
         <View style={styles.signInSignUpButtonContainer}>
         <CustomButton style={styles.signInButton} onPress={() => onSignIn()}>
-            <Text style={styles.signInButtonText}>Login</Text>
+            <Text style={styles.signInButtonText}>Sign up</Text>
           </CustomButton>
           <View style={styles.line}></View>  
           <View style={styles.signupContainer}>
