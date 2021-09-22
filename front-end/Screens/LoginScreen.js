@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, TextInput, ActivityIndicator, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ActivityIndicator, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../assets/colors';
 import CustomButton from '../Components/Button';
 import * as firebase from 'firebase';
 import 'firebase/auth';
 import KeyboardAvoidingWrapper from '../Components/KeyBoardAvoidingWrapper';
-import { KeyboardAvoidingView, Keyboard, ScrollView, TouchableWithoutFeedback } from 'react-native';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -133,7 +132,7 @@ export default function LoginScreen({ navigation }) {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.mainBgColor
+    backgroundColor: colors.mainBgColor,
   },
   textInputContainer: {
     flex: 1,
@@ -221,7 +220,6 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
     marginBottom: "5%",
     padding: 8,
-    // borderWidth: 1
   },
   titleFrom: {
     fontSize: 32,

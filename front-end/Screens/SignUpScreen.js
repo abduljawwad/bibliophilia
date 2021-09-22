@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Button, TextInput, ActivityIndicator, Image } from 'react-native';
+import { View, StyleSheet, TextInput, Text} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import colors from '../assets/colors';
 import CustomButton from '../Components/Button';
-import * as firebase from 'firebase';
+import colors from '../assets/colors';
 import 'firebase/auth';
 import KeyboardAvoidingWrapper from '../Components/KeyBoardAvoidingWrapper';
 
@@ -101,7 +100,6 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.mainBgColor,
     display:'flex',
     justifyContent: 'center',
-    borderWidth:1
   },
   textInputContainer: {
     flex: 2,
