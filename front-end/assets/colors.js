@@ -6,7 +6,6 @@ const colors = {
   textPlaceHolderBgColor: "grey",
   borderColor: "#E9E9E9",
   mainBgColor: "#E6E6FA",
-  // logoBgColor: "#bada55",
   logoBgColor: "#483D8B",
   btnBgColor: '#483D8B'
 };
