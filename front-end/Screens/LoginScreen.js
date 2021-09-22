@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button, TextInput, ActivityIndicator, Image } from 'react-native';
-import { Octicons, Fontisto, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import colors from '../assets/colors';
 import CustomButton from '../Components/Button';
 import * as firebase from 'firebase';
 import 'firebase/auth';
+import KeyboardAvoidingWrapper from '../Components/KeyBoardAvoidingWrapper';
+import { KeyboardAvoidingView, Keyboard, ScrollView, TouchableWithoutFeedback } from 'react-native';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -53,7 +55,7 @@ export default function LoginScreen({ navigation }) {
     }
   };
   return (
-    <>
+    <KeyboardAvoidingWrapper>
       <View style={styles.container}>
         {isLoading ? (
           <View style={[StyleSheet.absoluteFill, styles.activityIndicatorContainer]}>
@@ -76,8 +78,11 @@ export default function LoginScreen({ navigation }) {
               style={[styles.textInput]}
               placeholder="abc@example.com"
               keyboardType="email-address"
+              autoFocus={true}
               onChangeText={(text) => setEmail(text)}
               autoCapitalize='none'
+              value={email}
+              editable={true}
             />
           </View>
           <Text style={styles.labelText}>Password</Text>
@@ -89,6 +94,8 @@ export default function LoginScreen({ navigation }) {
               secureTextEntry
               onChangeText={(text) => setPassword(text)}
               autoCapitalize='none'
+              value={password}
+              editable={true}
             />
           </View>
         </View>
@@ -111,12 +118,15 @@ export default function LoginScreen({ navigation }) {
             </View>
           </CustomButton>
           <View style={styles.line}></View>
-          <CustomButton style={styles.signInButton} onPress={() => onSignUp()}>
-            <Text style={styles.signInButtonText}>Sign Up</Text>
+          <View style={styles.signupContainer}>
+          <Text style={styles.signupText}>Don't have an account already?</Text>
+          <CustomButton style = {styles.signupButton} onPress={() => {}}>
+              <Text style={styles.signupBtnText}> Sign up</Text>
           </CustomButton>
+          </View>
         </View>
       </View>
-    </>
+      </KeyboardAvoidingWrapper>
   );
 }
 
@@ -133,7 +143,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: '10%',
   },
   labelText: {
-    fontSize: 20,
+    fontSize: 16,
     alignSelf: 'flex-start',
     marginLeft: 15,
     marginBottom: '2%',
@@ -158,11 +168,11 @@ export const styles = StyleSheet.create({
     borderRadius: 2,
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 20,
+    fontSize: 16,
   },
   title: {
     fontSize: 32,
-    fontWeight: '300',
+    fontWeight: '400',
   },
   signInSignUpButtonContainer: {
     flex: 1,
@@ -181,7 +191,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   signInButtonText: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '500',
     color: '#fff'
   },
@@ -206,14 +216,30 @@ export const styles = StyleSheet.create({
     width: '20%',
   },
   logoContainer: {
-    flex: 1,
+    flex: 1.5,
     alignItems: "center",
     justifyContent: "flex-end",
     marginBottom: "5%",
     padding: 8,
+    // borderWidth: 1
   },
   titleFrom: {
     fontSize: 32,
     fontWeight: "300",
+  },
+  signupContainer:{
+    flex:1,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent:'flex-start'
+  },
+  signUpButton:{
+    color: '#111',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  signupBtnText:{
+    color: 'blue',
+    textDecorationLine: 'underline'
   },
 });
