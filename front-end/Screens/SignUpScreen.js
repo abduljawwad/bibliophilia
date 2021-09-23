@@ -135,6 +135,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 20,
+    color: colors.btnBgColor
   },
   signInSignUpButtonContainer: {
     flex: 1,

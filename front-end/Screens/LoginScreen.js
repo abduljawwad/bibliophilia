@@ -12,6 +12,7 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const { btnBgColor } = colors
   const onSignIn = async () => {
     if (email && password) {
       setIsLoading(true);
@@ -65,7 +66,7 @@ export default function LoginScreen({ navigation }) {
           <Ionicons
             name="ios-book"
             size={150}
-            color={colors.btnBgColor}
+            color={btnBgColor}
           ></Ionicons>
           <Text style={styles.titleFrom}>Bibliophilia</Text>
         </View>
@@ -159,6 +160,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 20,
+    color: colors.btnBgColor
   },
   textInput: {
     paddingRight: 7,
