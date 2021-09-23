@@ -150,9 +150,9 @@ export const styles = StyleSheet.create({
   },
   iconAndInputcontainer: {
     flexDirection: 'row',
-    borderWidth: 1,
+    borderBottomWidth: 1,
     width: '90%',
-    marginBottom: '5%',
+    marginBottom: '8%',
   },
   icon: {
     padding: 7,
