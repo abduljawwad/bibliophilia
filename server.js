@@ -1,7 +1,6 @@
-require('./config/db')
+require('./configCopy/db')
 const express = require("express");
 const app = express();
-const validate = require("express-jsonschema").validate;
 const helmet = require("helmet");
 const morgan = require("morgan");
 var bodyParser = require("body-parser");
