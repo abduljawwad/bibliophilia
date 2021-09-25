@@ -117,7 +117,7 @@ export default function LoginScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.signInSignUpButtonContainer}>
-        <CustomButton style={styles.signInButton} onPress={() => handleSignup()}>
+        <CustomButton style={styles.signInButton} onPress={() => handleSignup(credentials)}>
         {isLoading ? (
           <View style={[StyleSheet.absoluteFill, styles.signInButtonText]}>
             <ActivityIndicator size="large" color='white' />
