@@ -1,26 +1,65 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Text} from 'react-native';
+import { View, StyleSheet, TextInput, Text, ActivityIndicator} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import CustomButton from '../Components/Button';
 import colors from '../assets/colors';
-import 'firebase/auth';
 import KeyboardAvoidingWrapper from '../Components/KeyBoardAvoidingWrapper';
+import axios from 'axios';
 
 export default function LoginScreen({ navigation }) {
-  const [fullName, setFullName] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState();
+  const [messsageType, setMessageType] = useState();
+
+  const { btnBgColor } = colors
+
+  const handleSignup = (credentials) => {
+
+    setIsLoading(true)
+    setMessage(null)
+    setMessageType(null)
+
+    const url = 'http://still-hamlet-54265.herokuapp.com/user/signup'
+
+    axios
+      .post(url, credentials)
+      .then((response)=>{
+        setIsLoading(false)
+        const result =  response.data
+        const {message, status, data} = result
+
+        if (status !== 'SUCCESS') {
+          handleMessage(message, status)
+        } else {
+          navigation.navigate('Main')
+        }
+      })
+      .catch(err => {
+      setIsLoading(false)
+      console.log(err)
+      handleMessage('An error occurred. Please check your internet connection and try again')
+    })
+  }
+
+  const handleMessage = (message, messsageType='FAILED') => {
+    setMessage(message);
+    setMessageType(messsageType)
+  }
+
+  const credentials = {
+    name,
+    email,
+    password,
+    confirmPassword
+  }
 
   return (
     <KeyboardAvoidingWrapper>
       <View style={styles.container}>
-        {isLoading ? (
-          <View style={[StyleSheet.absoluteFill, styles.activityIndicatorContainer]}>
-            <ActivityIndicator size="large" color={colors.logoBgColor} />
-          </View>
-        ) : null}
         <View style={styles.textInputContainer}>
           <Text style={styles.labelText}>Full Name</Text>
           <View style={styles.iconAndInputcontainer}>
@@ -30,9 +69,9 @@ export default function LoginScreen({ navigation }) {
               placeholder="John Doe"
               keyboardType="default"
               autoFocus={true}
-              onChangeText={(text) => setFullName(text)}
+              onChangeText={(text) => setName(text)}
               autoCapitalize='words'
-              value={fullName}
+              value={name}
               editable={true}
             />
           </View>
@@ -78,8 +117,12 @@ export default function LoginScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.signInSignUpButtonContainer}>
-        <CustomButton style={styles.signInButton} onPress={() => onSignIn()}>
-            <Text style={styles.signInButtonText}>Sign up</Text>
+        <CustomButton style={styles.signInButton} onPress={() => handleSignup()}>
+        {isLoading ? (
+          <View style={[StyleSheet.absoluteFill, styles.signInButtonText]}>
+            <ActivityIndicator size="large" color='white' />
+          </View>
+        ) : <Text style={styles.signInButtonText}>Sign up</Text>}
           </CustomButton>
           <View style={styles.line}></View>  
           <View style={styles.signupContainer}>

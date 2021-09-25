@@ -3,65 +3,62 @@ import { View, Text, StyleSheet, TextInput, ActivityIndicator, Image } from 'rea
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../assets/colors';
 import CustomButton from '../Components/Button';
-import * as firebase from 'firebase';
-import 'firebase/auth';
 import KeyboardAvoidingWrapper from '../Components/KeyBoardAvoidingWrapper';
+import axios from 'axios'
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState();
+  const [messsageType, setMessageType] = useState();
 
   const { btnBgColor } = colors
-  const onSignIn = async () => {
-    if (email && password) {
-      setIsLoading(true);
-      try {
-        const response = await firebase.auth().signInWithEmailAndPassword(email, password);
-        if (response) {
-          setIsLoading(false);
-          //navigate the user
+
+  const handleLogin = (credentials) => {
+
+    setIsLoading(true)
+    setMessage(null)
+    setMessageType(null)
+
+    const url = 'http://still-hamlet-54265.herokuapp.com/user/login'
+
+    axios
+      .post(url, credentials)
+      .then((response)=>{
+        setIsLoading(false)
+        const result =  response.data
+        const {message, status, data} = result
+
+        if (status !== 'SUCCESS') {
+          handleMessage(message, status)
+        } else {
+          navigation.navigate('Main')
         }
-      } catch (err) {
-        setIsLoading(false);
-        if (err.code == 'auth/user-not-found') {
-          alert('A user with that email does not exist. Please sign up');
-        } else if (err.code == 'auth/invalid-email') {
-          alert('Please enter a valid email address');
-        }
-      }
-    } else {
-      alert('Please enter email and password');
-    }
-  };
-  const onSignUp = async () => {
-    if (email && password) {
-      setIsLoading(true);
-      try {
-        const response = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        if (response) {
-          setIsLoading(false);
-          //sign in the user
-          this.onSignIn(email, password);
-        }
-      } catch (err) {
-        setIsLoading(false);
-        if (err.code == 'auth/email-already-in-use') {
-          alert('User already exists. Try Logging in');
-        }
-      }
-    } else {
-      alert('Please enter email and password');
-    }
-  };
+      })
+      .catch(err => {
+      setIsLoading(false)
+      console.log(errror.JSON())
+      handleMessage('An error occurred. Please check your internet connection and try again')
+    })
+  }
+
+  const handleMessage = (message, messsageType='FAILED') => {
+    setMessage(message);
+    setMessageType(messsageType)
+  }
+
+  const credentials = {
+    email,
+    password
+  }
+  
+  
+
+
   return (
     <KeyboardAvoidingWrapper>
       <View style={styles.container}>
-        {isLoading ? (
-          <View style={[StyleSheet.absoluteFill, styles.activityIndicatorContainer]}>
-            <ActivityIndicator size="large" color={colors.logoBgColor} />
-          </View>
-        ) : null}
         <View style={styles.logoContainer}>
           <Ionicons
             name="ios-book"
@@ -98,10 +95,15 @@ export default function LoginScreen({ navigation }) {
               editable={true}
             />
           </View>
+          <Text style={styles.messageText} type={messsageType}>{message}</Text>
         </View>
         <View style={styles.signInSignUpButtonContainer}>
-          <CustomButton style={styles.signInButton} onPress={() => onSignIn()}>
-            <Text style={styles.signInButtonText}>Login</Text>
+          <CustomButton style={styles.signInButton} onPress={() => handleLogin(credentials)}>
+          {isLoading ? (
+          <View style={[StyleSheet.absoluteFill, styles.signInButtonText]}>
+            <ActivityIndicator size="large" color='white' />
+          </View>
+        ) : <Text style={styles.signInButtonText}>Login</Text>}
           </CustomButton>
           <CustomButton
             style={{
@@ -110,7 +112,7 @@ export default function LoginScreen({ navigation }) {
               alignItems: 'flex-start',
               backgroundColor: '#428fff',
             }}
-            onPress={() => onSignIn()}
+            onPress={() => {}}
           >
             <View style={styles.googleButtonView}>
               <Ionicons name="logo-google" size={20} color="#fff" style={styles.googleIcon} />
@@ -170,6 +172,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 16,
+  },
+  messageText: {
+    color: 'green',
+    fontSize: 20,
   },
   title: {
     fontSize: 32,
