@@ -6,7 +6,7 @@ import colors from '../assets/colors';
 import KeyboardAvoidingWrapper from '../Components/KeyBoardAvoidingWrapper';
 import axios from 'axios';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ navigation, route }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,8 +14,6 @@ export default function LoginScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState();
   const [messsageType, setMessageType] = useState();
-
-  const { btnBgColor } = colors
 
   const handleSignup = (credentials) => {
 
@@ -35,7 +33,7 @@ export default function LoginScreen({ navigation }) {
         if (status !== 'SUCCESS') {
           handleMessage(message, status)
         } else {
-          navigation.navigate('Main')
+          navigation.navigate('Main', {...data})
         }
       })
       .catch(err => {

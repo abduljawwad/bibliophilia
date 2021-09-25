@@ -33,7 +33,7 @@ export default function LoginScreen({ navigation }) {
         if (status !== 'SUCCESS') {
           handleMessage(message, status)
         } else {
-          navigation.navigate('Main')
+          navigation.navigate('Welcome',  {...data[0]})
         }
       })
       .catch(err => {

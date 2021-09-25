@@ -8,7 +8,7 @@ import colors from "../assets/colors";
 import BookInputForm from "../Components/BookInputForm";
 import { BooksContext } from "../Context/BooksContextProvider";
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
   const BooksContextValue = React.useContext(BooksContext);
 
   const {
@@ -35,6 +35,9 @@ export default function HomeScreen({ navigation }) {
     showAddBookBar,
     hideAddBookBar,
   } = BooksContextValue;
+
+  const routeparams= route.params
+  console.log("🚀 ~ file: HomeScreen.js ~ line 40 ~ HomeScreen ~ routeparams", routeparams)
 
   return (
     <View style={styles.container}>

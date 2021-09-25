@@ -4,13 +4,9 @@ import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
 import CustomButton from "../Components/Button";
 
-export default function WelcomeScreen({ navigation }) {
-  // const [isSignedIn, setIsSignedIn] = useState("false");
+export default function WelcomeScreen({ navigation, route }) {
 
-  // const signIn = () => {
-  //   !isSignedIn && setIsSignedIn("true");
-  //   console.log("issignedin?", isSignedIn);
-  // };
+  console.log("🚀 ~ file: WelcomeScreen.js ~ line 8 ~ WelcomeScreen ~ route", route.params)
 
   return (
     <>
