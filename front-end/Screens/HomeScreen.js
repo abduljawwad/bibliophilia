@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Modal } from "react-native";
 import Count from "../Components/Count";
 import BooksList from "../Components/BooksList";
@@ -7,9 +7,10 @@ import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
 import BookInputForm from "../Components/BookInputForm";
 import { BooksContext } from "../Context/BooksContextProvider";
+import { UserCredentialsContext } from "../Context/UserCredentialsContextProvider";
 
 export default function HomeScreen({ navigation, route }) {
-  const BooksContextValue = React.useContext(BooksContext);
+  const BooksContextValue = useContext(BooksContext);
 
   const {
     totalCount,
@@ -36,8 +37,7 @@ export default function HomeScreen({ navigation, route }) {
     hideAddBookBar,
   } = BooksContextValue;
 
-  const routeparams= route.params
-  console.log("🚀 ~ file: HomeScreen.js ~ line 40 ~ HomeScreen ~ routeparams", routeparams)
+  const { storedCredentials } = useContext(UserCredentialsContext)
 
   return (
     <View style={styles.container}>

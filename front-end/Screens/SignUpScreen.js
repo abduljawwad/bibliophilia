@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, TextInput, Text, ActivityIndicator} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import CustomButton from '../Components/Button';
 import colors from '../assets/colors';
 import KeyboardAvoidingWrapper from '../Components/KeyBoardAvoidingWrapper';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {UserCredentialsContext} from '../Context/UserCredentialsContextProvider'
 
 export default function LoginScreen({ navigation, route }) {
   const [name, setName] = useState('');
@@ -14,6 +16,7 @@ export default function LoginScreen({ navigation, route }) {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState();
   const [messsageType, setMessageType] = useState();
+  const { storedCredentials, setStoredCredentials } = useContext(UserCredentialsContext)
 
   const handleSignup = (credentials) => {
 
@@ -33,12 +36,12 @@ export default function LoginScreen({ navigation, route }) {
         if (status !== 'SUCCESS') {
           handleMessage(message, status)
         } else {
-          navigation.navigate('Main', {...data})
+          navigation.navigate('Login', {...data})
         }
       })
-      .catch(err => {
+      .catch(error => {
       setIsLoading(false)
-      console.log(err)
+      console.log(error)
       handleMessage('An error occurred. Please check your internet connection and try again')
     })
   }
@@ -47,12 +50,23 @@ export default function LoginScreen({ navigation, route }) {
     setMessage(message);
     setMessageType(messsageType)
   }
-
+  
   const credentials = {
     name,
     email,
     password,
     confirmPassword
+  }
+  
+  const persistSignin = async (credentials, message, status) => {
+    try {
+      const result = await AsyncStorage.setItem('bibliophia', JSON.stringify(credentials))
+        handleMessage(message, status);
+        setStoredCredentials(credentials);
+    } catch(error) {
+      console.log(error)
+      handleMessage('Persist Login failed')
+    }
   }
 
   return (

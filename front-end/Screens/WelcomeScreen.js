@@ -6,8 +6,6 @@ import CustomButton from "../Components/Button";
 
 export default function WelcomeScreen({ navigation, route }) {
 
-  console.log("🚀 ~ file: WelcomeScreen.js ~ line 8 ~ WelcomeScreen ~ route", route.params)
-
   return (
     <>
       <View style={styles.container}>

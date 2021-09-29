@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, ActivityIndicator, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../assets/colors';
 import CustomButton from '../Components/Button';
 import KeyboardAvoidingWrapper from '../Components/KeyBoardAvoidingWrapper';
 import axios from 'axios'
+import * as Google from 'expo-google-app-auth';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { UserCredentialsContext } from '../Context/UserCredentialsContextProvider';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -12,8 +15,13 @@ export default function LoginScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState();
   const [messsageType, setMessageType] = useState();
+  const [isGoogleSigninComplete, setIsGoogleSigninComplete] = useState(true)
+  const [accessToken, setAccessToken] = useState(null)
+  const [googleSigninType, setGoogleSigninType] = useState(null)
+  const { storedCredentials,setStoredCredentials } = useContext(UserCredentialsContext)
 
   const { btnBgColor } = colors
+
 
   const handleLogin = (credentials) => {
 
@@ -33,12 +41,14 @@ export default function LoginScreen({ navigation }) {
         if (status !== 'SUCCESS') {
           handleMessage(message, status)
         } else {
-          navigation.navigate('Welcome',  {...data[0]})
+          navigation.navigate('Main',{...data[0]})
+          persistSignin({...data[0]}, message, status)
+          console.log("🚀 ~ file: LoginScreen.js ~ line 47 ~ .then ~ ...data[0] inside normal signin", data[0])
         }
       })
-      .catch(err => {
+      .catch(error => {
       setIsLoading(false)
-      console.log(errror.JSON())
+      console.log(error)
       handleMessage('An error occurred. Please check your internet connection and try again')
     })
   }
@@ -52,10 +62,62 @@ export default function LoginScreen({ navigation }) {
     email,
     password
   }
-  
-  
 
+  const config = {
+    iosClientId: `1020179379148-j932l35smf18pea4a9h90426chg0hh27.apps.googleusercontent.com`,
+    androidClientId:`1020179379148-7a42e3i22n8ccclg646km3fmkml4fjhl.apps.googleusercontent.com`,
+    scopes: ['profile', 'email']
+  }
 
+  const handleGoogleSignin = async () => {
+    setIsGoogleSigninComplete(false)
+
+    try {
+      const { type, user } = await Google.logInAsync(config)
+      setIsGoogleSigninComplete(true)
+      setGoogleSigninType(type)
+      if (type === 'success') {
+        const {email, name, photoUrl, accessToken} = user
+        setAccessToken(accessToken)
+        // handleMessage('Google signin successful', 'SUCCESS');
+        setTimeout(() => navigation.navigate('Main', {email, name, photoUrl}))
+        persistSignin({email,name,photoUrl},'Google signin successful', 'SUCCESS')
+      } else {
+        handleMessage('Google signin was cancelled')
+      }
+    } catch(error) {
+      setIsGoogleSigninComplete(true)
+      setGoogleSigninType(null)
+      console.log(error)
+      handleMessage('An error occurred. Please check your network and try again')
+    }
+  }
+
+  const handleGoogleSignout = async() => {
+
+    const { iosClientId, androidClientId } = config
+    const type = googleSigninType
+
+    try {
+      if (type === 'success') {
+        await Google.logOutAsync({accessToken, iosClientId, androidClientId})
+      }
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
+  const persistSignin = async (credentials, message, status) => {
+    try {
+      const result = await AsyncStorage.setItem('bibliophia', JSON.stringify(credentials))
+        handleMessage(message, status);
+        setStoredCredentials(credentials);
+    } catch(error) {
+      console.log(error)
+      handleMessage('Persist Login failed')
+    }
+  }
+  
   return (
     <KeyboardAvoidingWrapper>
       <View style={styles.container}>
@@ -95,15 +157,15 @@ export default function LoginScreen({ navigation }) {
               editable={true}
             />
           </View>
-          <Text style={styles.messageText} type={messsageType}>{message}</Text>
+          {/* <Text style={styles.messageText} type={messsageType}>{message}</Text> */}
         </View>
         <View style={styles.signInSignUpButtonContainer}>
           <CustomButton style={styles.signInButton} onPress={() => handleLogin(credentials)}>
-          {isLoading ? (
-          <View style={[StyleSheet.absoluteFill, styles.signInButtonText]}>
-            <ActivityIndicator size="large" color='white' />
-          </View>
-        ) : <Text style={styles.signInButtonText}>Login</Text>}
+            <Text style={styles.signInButtonText}>
+              {isLoading ? 
+              <ActivityIndicator size="small" color='white' />
+              : `Login`}
+              </Text>
           </CustomButton>
           <CustomButton
             style={{
@@ -112,11 +174,16 @@ export default function LoginScreen({ navigation }) {
               alignItems: 'flex-start',
               backgroundColor: '#428fff',
             }}
-            onPress={() => {}}
+            onPress={() => {handleGoogleSignin()}}
           >
             <View style={styles.googleButtonView}>
               <Ionicons name="logo-google" size={20} color="#fff" style={styles.googleIcon} />
-              <Text style={{ ...styles.signInButtonText, width: '80%', color: '#fff' }}>Sign in with google</Text>
+              <Text style={{ ...styles.signInButtonText, ...styles.googleSigninBtnText}}>
+                {isGoogleSigninComplete ? 
+                `Sign in with Google` :
+                <ActivityIndicator size="small" />
+                }
+              </Text>
             </View>
           </CustomButton>
           <View style={styles.line}></View>
@@ -191,6 +258,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 8,
     width: '90%',
+    height: '30%',
     backgroundColor: colors.btnBgColor,
     borderRadius: 50,
     marginBottom: '2%',
@@ -198,9 +266,14 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   signInButtonText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '500',
     color: '#fff'
+  },
+  googleSigninBtnText: {
+    width: '90%',
+    textAlign: 'center',
+    textAlignVertical: 'center'
   },
   activityIndicatorContainer: {
     alignItems: 'center',
@@ -220,7 +293,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   googleIcon: {
-    width: '20%',
+    width: '10%',
   },
   logoContainer: {
     flex: 1.5,
