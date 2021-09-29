@@ -11,7 +11,6 @@ import SignupScreen from '../Screens/SignupScreen';
 import BooksContextProvider from '../Context/BooksContextProvider';
 import {UserCredentialsContext} from '../Context/UserCredentialsContextProvider';
 
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -29,13 +28,19 @@ function MainPages () {
 
 export default function NavigationStack({ navigation }) {
 	const { storedCredentials } = useContext(UserCredentialsContext)
-  console.log("🚀 ~ file: NavigationStack.js ~ line 32 ~ NavigationStack ~ storedCredentials", storedCredentials)
  
   return (
 			<NavigationContainer>
-					<Stack.Navigator initialRouteName='Login' screenOptions={{headerShown:false}}>
+					<Stack.Navigator screenOptions={{headerShown:false}}>
 						{
-						storedCredentials? <Stack.Screen name="Welcome" component={WelcomeScreen} /> : 
+						storedCredentials? 
+						<>
+							<Stack.Screen name="Main" component={MainPages} />
+							<Stack.Screen name="Welcome" component={WelcomeScreen} /> 
+							<Stack.Screen name="Login" component={LoginScreen} />
+							<Stack.Screen name="Signup" component={SignupScreen} />
+						</>
+						: 
 						<>					
 							<Stack.Screen name="Login" component={LoginScreen} />
 							<Stack.Screen name="Signup" component={SignupScreen} />
