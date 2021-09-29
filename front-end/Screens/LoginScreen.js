@@ -157,7 +157,7 @@ export default function LoginScreen({ navigation }) {
               editable={true}
             />
           </View>
-          {/* <Text style={styles.messageText} type={messsageType}>{message}</Text> */}
+          <Text style={styles.messageText} type={messsageType}>{message}</Text>
         </View>
         <View style={styles.signInSignUpButtonContainer}>
           <CustomButton style={styles.signInButton} onPress={() => handleLogin(credentials)}>
