@@ -52,7 +52,6 @@ export default function LoginScreen({ navigation }) {
       handleMessage('An error occurred. Please check your internet connection and try again')
     })
   }
-  console.log("🚀 ~ file: LoginScreen.js ~ line 56 ~ handleLogin ~ handleLogin", handleLogin)
 
   const handleMessage = (message, messsageType='FAILED') => {
     setMessage(message);

@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+const bcrypt = require('bcrypt')
+
+// mongoDB user model
+const User = require('./../models/User')
 
 module.exports.signup = (req,res) => {
 	let { name, email, password, confirmPassword } = req.body
