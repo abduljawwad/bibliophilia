@@ -24,7 +24,7 @@ export default function LoginScreen({ navigation, route }) {
     setMessage(null)
     setMessageType(null)
 
-    const url = 'http://still-hamlet-54265.herokuapp.com/user/signup'
+    const url = 'http://localhost:5000/user/signup'
 
     axios
       .post(url, credentials)
