@@ -4,4 +4,8 @@ const router = express.Router();
 // mongoDB Book model
 const Book = require('./../models/Book')
 
-module.exports = router;
+module.exports.addBook = (req,res) => {
+
+}
+
+// module.exports = router;

@@ -1,4 +1,4 @@
-// const Books = require('./Book')
+const Books = require('./Book')
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -13,10 +13,10 @@ const UserSchema = new Schema({
 	},
 	password: String,
 	photoUrl: String,
-	// books: [{
-	// 	type: Schema.Types.ObjectId,
-	// 	ref: Books.BookSchema,
-	// }]
+	books: [{
+		type: Schema.Types.ObjectId,
+		ref: Books.BookSchema,
+	}]
 })
 
 const User = mongoose.model('User', UserSchema)

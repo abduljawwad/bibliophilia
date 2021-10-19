@@ -36,6 +36,18 @@ export default function HomeScreen({ navigation, route }) {
     showAddBookBar,
     hideAddBookBar,
   } = BooksContextValue;
+    console.log("🚀 ~ file: HomeScreen.js ~ line 39 ~ HomeScreen ~ newBook", newBook)
+
+    const handleBookEntry = (book) => {
+      const { title, author, genre, readingFlag } = book;
+      const url = 'http://localhost:5000/user/addBook'
+      axios
+       .post(url)
+       .then(response => {
+         const result = response.data
+         console.log("🚀 ~ file: HomeScreen.js ~ line 48 ~ handleBookEntry ~ result", result)
+       })
+    }
 
   const { storedCredentials } = useContext(UserCredentialsContext)
   console.log('homescreen - user ', storedCredentials)
