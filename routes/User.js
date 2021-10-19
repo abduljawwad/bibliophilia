@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../controllers/User')
 
 // mongoDB user model
-const User = require('./../models/User')
+const Users = require('./../models/User')
 
 // bcrypt library
 const bcrypt = require('bcrypt')
