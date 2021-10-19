@@ -38,6 +38,7 @@ export default function HomeScreen({ navigation, route }) {
   } = BooksContextValue;
 
   const { storedCredentials } = useContext(UserCredentialsContext)
+  console.log('homescreen - user ', storedCredentials)
 
   return (
     <View style={styles.container}>
