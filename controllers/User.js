@@ -100,7 +100,7 @@ module.exports.signin = (req,res) => {
 						// Password match
 						res.json({
 							status: "SUCCESS",
-							message: "Signup successful",
+							message: "Signin successful",
 							data: data,
 						})
 					} else {
