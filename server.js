@@ -21,5 +21,5 @@ app.use('/user', UserRouter)
 
 
 
-const port = process.env.PORT || 3099;
+const port = process.env.PORT || 3100;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
