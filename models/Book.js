@@ -5,9 +5,16 @@ const BookSchema = new Schema({
 	title: String,
 	author: String,
 	genre: String,
-	readingFlag: Boolean,
+	readingFlag: {
+		type: Boolean,
+		default: true,
+	},
+	userId: {
+		type: Schema.Types.ObjectId,
+		ref: "User",
+	}
 })
 
 const Book = mongoose.model('Book', BookSchema)
 
-module.exports = {Book, BookSchema};
+module.exports = Book;

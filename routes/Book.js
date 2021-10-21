@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const Book = require('../controllers/Book')
 
-// mongoDB Book model
-const Book = require('./../models/Book')
+// addBook
+router.post("/addbook", Book.addBook)
 
-module.exports.addBook = (req,res) => {
+// markBookAsComplete
+router.post("/markBookAsComplete", Book.markBookAsComplete)
 
-}
+// deleteBook
+router.post("/deleteBook", Book.deleteBook)
 
-// module.exports = router;
+module.exports = router;

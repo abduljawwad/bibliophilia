@@ -13,10 +13,12 @@ const UserSchema = new Schema({
 	},
 	password: String,
 	photoUrl: String,
-	books: [{
+	books: [
+		{
 		type: Schema.Types.ObjectId,
-		ref: Books.BookSchema,
-	}]
+		ref: "Book",
+	}
+],
 })
 
 const User = mongoose.model('User', UserSchema)
