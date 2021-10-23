@@ -39,7 +39,9 @@ module.exports.addBook = async (req,res, next) => {
 }
 
 module.exports.getAllBooksForUser = async (req,res,next) => {
-	const {userId} = req.body;
+	const { _id:userId } = req.body;
+  console.log("🚀 ~ file: Book.js ~ line 43 ~ module.exports.getAllBooksForUser= ~ req.body", req.body)
+  console.log("🚀 ~ file: Book.js ~ line 45 ~ module.exports.getAllBooksForUser= ~ userId", userId)
 	// GetAllBooks for a particular user (userId)
 		// Find User
 		// query books array
@@ -52,7 +54,7 @@ module.exports.getAllBooksForUser = async (req,res,next) => {
 }
 
 module.exports.markBookAsComplete = async (req,res,next) => {
-	const {userId, bookId} = req.body;
+	const {userId, _id:bookId, readingFlag} = req.body;
 
 	// MarkAsRead (userId, bookId)
 		// Find Book
@@ -60,25 +62,41 @@ module.exports.markBookAsComplete = async (req,res,next) => {
 		// Find all books for User after update
 
 	try{
-		const updateBook = await Book.findByIdAndUpdate(
-			bookId,
-			{
-				$set: {
-					readingFlag: false
-				}
-			},
-			{new: true, useFindAndModify: false} 
-			);
 
-		const allBooksForUserAfterUpdate = await User.findById(userId).populate('books').select('books -_id')
-		res.send(allBooksForUserAfterUpdate)
+		if (readingFlag === true) {
+			const updateBook = await Book.findByIdAndUpdate(
+				bookId,
+				{
+					$set: {
+						readingFlag: false
+					}
+				},
+				{new: true, useFindAndModify: false} 
+				);
+	
+			const allBooksForUserAfterUpdate = await User.findById(userId).populate('books').select('books -_id')
+			res.send(allBooksForUserAfterUpdate)
+		} else {
+			const updateBook = await Book.findByIdAndUpdate(
+				bookId,
+				{
+					$set: {
+						readingFlag: true
+					}
+				},
+				{new: true, useFindAndModify: false} 
+				);
+	
+			const allBooksForUserAfterUpdate = await User.findById(userId).populate('books').select('books -_id')
+			res.send(allBooksForUserAfterUpdate)
+		}
 	} catch(error) {
 		next(error)
 	}
 }
 
 module.exports.deleteBook = async (req,res,next) => {
-	const {userId, bookId} = req.body;
+	const {userId, _id:bookId} = req.body;
 
 	// Delete book (userId, bookId)
 		// Find and delete Book

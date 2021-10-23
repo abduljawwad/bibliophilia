@@ -11,4 +11,7 @@ router.post("/markBookAsComplete", Book.markBookAsComplete)
 // deleteBook
 router.post("/deleteBook", Book.deleteBook)
 
+// getAllBooksForUser
+router.post("/getAllBooksForUser", Book.getAllBooksForUser)
+
 module.exports = router;
