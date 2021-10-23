@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView, Modal } from "react-native";
 import Count from "../Components/Count";
 import BooksList from "../Components/BooksList";
@@ -8,6 +8,7 @@ import colors from "../assets/colors";
 import BookInputForm from "../Components/BookInputForm";
 import { BooksContext } from "../Context/BooksContextProvider";
 import { UserCredentialsContext } from "../Context/UserCredentialsContextProvider";
+import axios from 'axios';
 
 export default function HomeScreen({ navigation, route }) {
   const BooksContextValue = useContext(BooksContext);
@@ -33,24 +34,32 @@ export default function HomeScreen({ navigation, route }) {
     markAsRead,
     addFormValues,
     deleteBookEntry,
+    deleteBook,
     showAddBookBar,
     hideAddBookBar,
+    getAllBooksForUser,
+    handleBookEntry,
+    markBookAsComplete,
   } = BooksContextValue;
-    console.log("🚀 ~ file: HomeScreen.js ~ line 39 ~ HomeScreen ~ newBook", newBook)
 
-    const handleBookEntry = (book) => {
-      const { title, author, genre, readingFlag } = book;
-      const url = 'http://localhost:5000/user/addBook'
-      axios
-       .post(url)
-       .then(response => {
-         const result = response.data
-         console.log("🚀 ~ file: HomeScreen.js ~ line 48 ~ handleBookEntry ~ result", result)
-       })
-    }
+    const { storedCredentials } = useContext(UserCredentialsContext)
+    let { _id: userId } = storedCredentials
 
-  const { storedCredentials } = useContext(UserCredentialsContext)
-  console.log('homescreen - user ', storedCredentials)
+    const idObj = {};
+    idObj.userId = userId;
+    console.log("🚀 ~ file: HomeScreen.js ~ line 46 ~ HomeScreen ~ idObj", idObj)
+
+    useEffect(()=>{
+      getAllBooksForUser(idObj)
+    },[])
+  
+    newBook.userId = userId
+  
+    useEffect(()=>{
+        handleBookEntry(newBook)
+      }, [newBook])
+      
+    console.log("🚀 ~ file: HomeScreen.js ~ line 52 ~ handleBookEntry ~ booksArray", books)
 
   return (
     <View style={styles.container}>
@@ -77,8 +86,8 @@ export default function HomeScreen({ navigation, route }) {
         </Modal>
         <BooksList
           books={books}
-          markAsRead={(item) => markAsRead(item)}
-          deleteBookEntry={(item) => deleteBookEntry(item)}
+          markBookAsComplete={(item) => markBookAsComplete(item)}
+          deleteBook={(item) => deleteBook(item)}
         />
         <Button
           style={[
