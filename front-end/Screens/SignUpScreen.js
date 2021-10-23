@@ -24,7 +24,7 @@ export default function LoginScreen({ navigation, route }) {
     setMessage(null)
     setMessageType(null)
 
-    const url = 'http://localhost:5000/user/signup'
+    const url = 'http://localhost:5000/signup'
 
     axios
       .post(url, credentials)
