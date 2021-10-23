@@ -25,7 +25,7 @@ module.exports.addBook = async (req,res, next) => {
 			const updatedUser = await User.findByIdAndUpdate(
 				userId, 
 				{$push: { books: newBook._id}},
-				{new: true, useFindAndModify: false}
+				{new: true}
 				);
 		}		
 		// Get all books for the user
@@ -40,8 +40,6 @@ module.exports.addBook = async (req,res, next) => {
 
 module.exports.getAllBooksForUser = async (req,res,next) => {
 	const { _id:userId } = req.body;
-  console.log("🚀 ~ file: Book.js ~ line 43 ~ module.exports.getAllBooksForUser= ~ req.body", req.body)
-  console.log("🚀 ~ file: Book.js ~ line 45 ~ module.exports.getAllBooksForUser= ~ userId", userId)
 	// GetAllBooks for a particular user (userId)
 		// Find User
 		// query books array
@@ -71,9 +69,9 @@ module.exports.markBookAsComplete = async (req,res,next) => {
 						readingFlag: false
 					}
 				},
-				{new: true, useFindAndModify: false} 
+				{new: true} 
 				);
-	
+
 			const allBooksForUserAfterUpdate = await User.findById(userId).populate('books').select('books -_id')
 			res.send(allBooksForUserAfterUpdate)
 		} else {
@@ -84,7 +82,7 @@ module.exports.markBookAsComplete = async (req,res,next) => {
 						readingFlag: true
 					}
 				},
-				{new: true, useFindAndModify: false} 
+				{new: true} 
 				);
 	
 			const allBooksForUserAfterUpdate = await User.findById(userId).populate('books').select('books -_id')
@@ -105,8 +103,15 @@ module.exports.deleteBook = async (req,res,next) => {
 	try{
 		const deleteBook = await Book.findByIdAndDelete(
 			bookId,
-			{new: true, useFindAndModify: false} 
+			{new: true} 
 			);
+
+		const updatedUser = await User
+		  .findByIdAndUpdate(userId, {
+				$pull: {
+					books: deleteBook._id
+				}
+			}, {new: true});
 
 		const allBooksForUserAfterUpdate = await User.findById(userId).populate('books').select('books -_id')
 		res.send(allBooksForUserAfterUpdate)

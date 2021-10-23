@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { UserCredentialsContext } from "./UserCredentialsContextProvider";
+import axios from 'axios';
 
 export const BooksContext = React.createContext();
 
@@ -9,7 +11,6 @@ export default function BooksContextProvider({ children }) {
   const [readCount, setReadCount] = useState(0);
   const [isAddBookBarVisible, setIsAddBookBarVisible] = useState(false);
   const [newBook, setNewBook] = useState({
-    id: uuidv4(),
     title: "",
     author: "",
     genre: "",
@@ -21,6 +22,15 @@ export default function BooksContextProvider({ children }) {
   const showAddBookBar = () => {
     setIsAddBookBarVisible(true);
   };
+
+  useEffect(() => {
+    books,
+    booksReading,
+    completedBooks
+    setTotalCount(books.length);
+    setReadingCount(booksReading.length);
+    setReadCount(completedBooks.length);
+  }, [booksReading, completedBooks, books]);
 
   const hideAddBookBar = () => {
     setIsAddBookBarVisible(false);
@@ -73,26 +83,48 @@ export default function BooksContextProvider({ children }) {
     setCompletedBooks(updatedBooksCompleted);
   };
 
+  const getAllBooksForUser = (idObj) => {
+    const url = `http://localhost:5000/getAllBooksForUser`
+    axios
+     .post(url, idObj)
+     .then(response => {
+       setBooks(response.data.books || [])
+       
+      })
+    }
+
+  const markBookAsComplete = (selectedBook) => {
+    const url = `http://localhost:5000/markBookAsComplete`
+    axios
+     .post(url, selectedBook)
+     .then(response => {
+       setBooks(response.data.books || [])
+      })
+    }
+
+  const deleteBook = (selectedBook) => {
+    const url = `http://localhost:5000/deleteBook`
+    axios
+     .post(url, selectedBook)
+     .then(response => {
+       setBooks(response.data.books || [])
+      })
+    }
+
+  const handleBookEntry = (book) => {
+    const url = `http://localhost:5000/addBook`
+    axios
+     .post(url, book)
+     .then(response => {
+       setBooks(response.data.books || [])
+     })}
+
   const addFormValues = (formValues) => {
     setNewBook((newBook) => ({
       ...newBook,
       ...formValues,
-      id: uuidv4(),
     }));
   };
-
-  useEffect(() => {
-    addBook();
-    setTotalCount(books.length);
-    setReadingCount(booksReading.length);
-    setReadCount(completedBooks.length);
-  }, [newBook, booksReading, completedBooks, books]);
-
-  useEffect(() => {
-    setTotalCount(books.length);
-    setReadingCount(booksReading.length);
-    setReadCount(completedBooks.length);
-  }, [booksReading, completedBooks, books]);
 
   const valObj = {
     totalCount,
@@ -117,7 +149,21 @@ export default function BooksContextProvider({ children }) {
     deleteBookEntry,
     showAddBookBar,
     hideAddBookBar,
+    getAllBooksForUser,
+    handleBookEntry,
+    markBookAsComplete,
+    deleteBook,
   };
+
+  useEffect(() => {
+    const booksReadingList = books.filter(book => book.readingFlag === true)
+    const booksCompletedList = books.filter(book => book.readingFlag === false)
+    setBooksReading(booksReadingList)
+    setCompletedBooks(booksCompletedList)
+    setTotalCount(books.length);
+    setReadingCount(booksReading.length);
+    setReadCount(completedBooks.length);
+  }, [books]);
 
   return (
     <BooksContext.Provider value={valObj}>{children}</BooksContext.Provider>

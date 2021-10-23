@@ -47,19 +47,12 @@ export default function HomeScreen({ navigation, route }) {
 
     const idObj = {};
     idObj.userId = userId;
-    console.log("🚀 ~ file: HomeScreen.js ~ line 46 ~ HomeScreen ~ idObj", idObj)
 
-    useEffect(()=>{
-      getAllBooksForUser(idObj)
-    },[])
-  
     newBook.userId = userId
   
     useEffect(()=>{
         handleBookEntry(newBook)
       }, [newBook])
-      
-    console.log("🚀 ~ file: HomeScreen.js ~ line 52 ~ handleBookEntry ~ booksArray", books)
 
   return (
     <View style={styles.container}>

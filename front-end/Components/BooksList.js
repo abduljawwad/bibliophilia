@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
 
 export default function BooksList(props) {
-  const { books, booksReading, markAsRead, deleteBookEntry } = props;
+  const { books, booksReading, markBookAsComplete, deleteBook } = props;
 
   const itemsList = ({ item }) => (
     <View style={styles.booksList}>
@@ -28,7 +28,7 @@ export default function BooksList(props) {
             <View>
               <Button
                 style={styles.markAsReadView}
-                onPress={() => markAsRead(item)}
+                onPress={() => markBookAsComplete(item)}
               >
                 <Text style={styles.markAsReadText}>Mark as Read</Text>
               </Button>
@@ -37,7 +37,7 @@ export default function BooksList(props) {
                   ...styles.markAsReadView,
                   backgroundColor: colors.closeMarkBgColor,
                 }}
-                onPress={() => deleteBookEntry(item)}
+                onPress={() => deleteBook(item)}
               >
                 <Text style={styles.markAsReadText}>Delete Book</Text>
               </Button>
@@ -58,7 +58,7 @@ export default function BooksList(props) {
                     ...styles.markAsReadView,
                     backgroundColor: colors.closeMarkBgColor,
                   }}
-                  onPress={() => deleteBookEntry(item)}
+                  onPress={() => deleteBook(item)}
                 >
                   <Text style={styles.markAsReadText}>Delete Book</Text>
                 </Button>
@@ -78,7 +78,7 @@ export default function BooksList(props) {
   return (
     <FlatList
       data={[...books]}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item._id}
       renderItem={itemsList}
       ListEmptyComponent={listEmptyView}
     ></FlatList>
