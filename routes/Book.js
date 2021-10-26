@@ -8,6 +8,9 @@ router.post("/addbook", Book.addBook)
 // markBookAsComplete
 router.post("/markBookAsComplete", Book.markBookAsComplete)
 
+// changeBookStatustoReading
+router.post("/changeBookStatustoReading", Book.changeBookStatustoReading)
+
 // deleteBook
 router.post("/deleteBook", Book.deleteBook)
 

@@ -12,26 +12,27 @@ import { Ionicons } from "@expo/vector-icons";
 import colors from "../assets/colors";
 
 export default function BooksList(props) {
-  const { books, booksReading, markBookAsComplete, deleteBook } = props;
+  const { books, booksReading, markBookAsComplete, deleteBook, changeBookStatustoReading } = props;
 
   const itemsList = ({ item }) => (
     <View style={styles.booksList}>
       <View style={styles.bookItem}>
         <View style={styles.imagecontainer}>
-          <Image style={styles.image}></Image>
+          <Image style={styles.image}
+            source={{uri:'http://images.amazon.com/images/P/0596004613.01._PE30_PI_SCMZZZZZZZ_.jpg'}}></Image>
         </View>
         <View style={styles.titleContainer}>
           <Text style={styles.bookTitle}>{item.title}</Text>
+          <Text style={styles.bookTitle}>{item.author}</Text>
         </View>
         <View style={styles.buttonContainer}>
           {(item.readingFlag && (
             <View>
               <Button
-                style={styles.markAsReadView}
-                onPress={() => markBookAsComplete(item)}
-              >
-                <Text style={styles.markAsReadText}>Mark as Read</Text>
-              </Button>
+              style={styles.markAsReadView}
+              onPress={() => markBookAsComplete(item)}>
+              <Text style={styles.markAsReadText}>Mark as Read</Text>
+             </Button>
               <Button
                 style={{
                   ...styles.markAsReadView,
@@ -42,10 +43,12 @@ export default function BooksList(props) {
                 <Text style={styles.markAsReadText}>Delete Book</Text>
               </Button>
             </View>
-          )) ||
+          ))
+          ||
             (!item.readingFlag && (
               <View>
-                <Button style={styles.markAsReadView}>
+                <Button style={styles.markAsReadView}
+                onPress={() => changeBookStatustoReading(item)}>
                   <Ionicons
                     name="ios-checkmark"
                     color="white"
@@ -112,15 +115,16 @@ const styles = StyleSheet.create({
   titleContainer: {
     flex: 1,
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
   },
   bookTitle: {
     flex: 1,
     paddingLeft: 8,
     paddingRight: 5,
+    paddingTop: 5,
     fontWeight: "400",
     fontSize: 16,
-    alignSelf: "center",
+    alignSelf: "flex-start",
   },
   buttonContainer: {
     width: 100,

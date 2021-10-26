@@ -102,6 +102,15 @@ export default function BooksContextProvider({ children }) {
       })
     }
 
+  const changeBookStatustoReading = (selectedBook) => {
+    const url = `http://localhost:5000/changeBookStatustoReading`
+    axios
+     .post(url, selectedBook)
+     .then(response => {
+       setBooks(response.data.books || [])
+      })
+    }
+
   const deleteBook = (selectedBook) => {
     const url = `http://localhost:5000/deleteBook`
     axios
@@ -153,6 +162,7 @@ export default function BooksContextProvider({ children }) {
     handleBookEntry,
     markBookAsComplete,
     deleteBook,
+    changeBookStatustoReading,
   };
 
   useEffect(() => {

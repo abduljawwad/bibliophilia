@@ -40,6 +40,7 @@ export default function HomeScreen({ navigation, route }) {
     getAllBooksForUser,
     handleBookEntry,
     markBookAsComplete,
+    changeBookStatustoReading
   } = BooksContextValue;
 
     const { storedCredentials } = useContext(UserCredentialsContext)
@@ -47,6 +48,10 @@ export default function HomeScreen({ navigation, route }) {
 
     const idObj = {};
     idObj.userId = userId;
+
+    // useEffect(()=>{
+    //   getAllBooksForUser(idObj)
+    // })
 
     newBook.userId = userId
   
@@ -80,6 +85,7 @@ export default function HomeScreen({ navigation, route }) {
         <BooksList
           books={books}
           markBookAsComplete={(item) => markBookAsComplete(item)}
+          changeBookStatustoReading={(item) => changeBookStatustoReading(item)}
           deleteBook={(item) => deleteBook(item)}
         />
         <Button
@@ -96,11 +102,11 @@ export default function HomeScreen({ navigation, route }) {
           <Text style={styles.plusButton}>+</Text>
         </Button>
       </View>
-      <View style={styles.footer}>
+      {/* <View style={styles.footer}>
         <Count title="All Books" count={totalCount} />
         <Count title="Reading" count={readingCount} />
         <Count title="Read" count={readCount} />
-      </View>
+      </View> */}
       <SafeAreaView />
     </View>
   );
@@ -109,7 +115,7 @@ export default function HomeScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.mainBgColor,
+    backgroundColor: '#fff',
   },
   header: {
     height: 70,

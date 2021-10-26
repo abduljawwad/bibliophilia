@@ -53,6 +53,7 @@ module.exports.getAllBooksForUser = async (req,res,next) => {
 
 module.exports.markBookAsComplete = async (req,res,next) => {
 	const {userId, _id:bookId, readingFlag} = req.body;
+  console.log("🚀 ~ file: Book.js ~ line 56 ~ module.exports.markBookAsComplete ~ readingFlag", readingFlag)
 
 	// MarkAsRead (userId, bookId)
 		// Find Book
@@ -60,8 +61,6 @@ module.exports.markBookAsComplete = async (req,res,next) => {
 		// Find all books for User after update
 
 	try{
-
-		if (readingFlag === true) {
 			const updateBook = await Book.findByIdAndUpdate(
 				bookId,
 				{
@@ -74,7 +73,20 @@ module.exports.markBookAsComplete = async (req,res,next) => {
 
 			const allBooksForUserAfterUpdate = await User.findById(userId).populate('books').select('books -_id')
 			res.send(allBooksForUserAfterUpdate)
-		} else {
+	} catch(error) {
+		next(error)
+	}
+}
+
+module.exports.changeBookStatustoReading = async (req,res,next) => {
+	const {userId, _id:bookId, readingFlag} = req.body;
+
+	// MarkAsRead (userId, bookId)
+		// Find Book
+			// set readingFlag as true
+		// Find all books for User after update
+
+	try{
 			const updateBook = await Book.findByIdAndUpdate(
 				bookId,
 				{
@@ -84,10 +96,8 @@ module.exports.markBookAsComplete = async (req,res,next) => {
 				},
 				{new: true} 
 				);
-	
 			const allBooksForUserAfterUpdate = await User.findById(userId).populate('books').select('books -_id')
 			res.send(allBooksForUserAfterUpdate)
-		}
 	} catch(error) {
 		next(error)
 	}
