@@ -66,25 +66,17 @@ export default function HomeScreen({ navigation, route }) {
         <Text style={styles.headerText}>Bibliophilia</Text>
       </View>
       <View style={styles.body}>
-        <Modal visible={isAddBookBarVisible} animationType="slide">
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <>
-              <SafeAreaView />
+        <Modal 
+          style = {styles.safeAreaView} 
+          visible={isAddBookBarVisible} 
+          animationType="slide">
+            <SafeAreaView />
+              <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={styles.contentView}>
-                  <Button
-                    onPress={hideAddBookBar}
-                    style={{
-                      ...styles.closeMarkView,
-                      alignSelf: "center",
-                    }}
-                  >
-                    <Ionicons name="ios-close" color="white" size={30}></Ionicons>
-                  </Button>
-                  <BookInputForm addFormValues={addFormValues}></BookInputForm>
+                  <BookInputForm addFormValues={addFormValues} hideAddBookBar={hideAddBookBar}></BookInputForm>
                 </View>
-              <SafeAreaView />
-            </>
-          </TouchableWithoutFeedback>
+              </TouchableWithoutFeedback>
+            <SafeAreaView />
         </Modal>
         <BooksList
           books={books}
