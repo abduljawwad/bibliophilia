@@ -151,5 +151,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  listEmptyText: { fontSize: 16, fontWeight: "bold" },
+  listEmptyText: { fontSize: 16, color: colors.textColor },
 });
