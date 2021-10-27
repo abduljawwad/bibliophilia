@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Button, TextInput, View, Text } from "react-native";
 import { Formik } from "formik";
 import * as yup from 'yup'
+import colors from '../assets/colors'
 
 const bookInputFormSchema = yup.object({
   title: yup.string()
@@ -29,31 +30,39 @@ export default function BookInputForm({ addFormValues }) {
           <View>
             <TextInput
               style={styles.input}
-              placeholder="Book title (Required)"
+              placeholder="Book title"
               onChangeText={props.handleChange("title")}
               value={props.values.title}
+              onBlur={props.handleBlur('title')}
             />
+            <Text style={styles.errorMessage}>{props.touched.title && props.errors.title}</Text>
 
             <TextInput
               style={styles.input}
               placeholder="Author Name"
               onChangeText={props.handleChange("author")}
               value={props.values.author}
+              onBlur={props.handleBlur('author')}
             />
+            <Text style={styles.errorMessage}>{props.touched.author && props.errors.author}</Text>
 
             <TextInput
               style={styles.input}
-              placeholder="Genre (optional)"
+              placeholder="Genre"
               onChangeText={props.handleChange("genre")}
               value={props.values.genre}
+              onBlur={props.handleBlur('genre')}
             />
+            <Text style={styles.errorMessage}>{props.touched.genre && props.errors.genre}</Text>
 
             <TextInput
               style={styles.input}
-              placeholder="Image URL (optional)"
+              placeholder="Image URL"
               onChangeText={props.handleChange("imageUrl")}
               value={props.values.imageUrl}
+              onBlur={props.handleBlur('imageUrl')}
             />
+            <Text style={styles.errorMessage}>{props.touched.imageUrl && props.errors.imageUrl}</Text>
 
             <Button
               color="maroon"
@@ -82,4 +91,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderRadius: 6,
   },
+  errorMessage: {
+    textAlign: 'center',
+    fontWeight:'bold',
+    color: colors.errorMessage,
+    marginBottom: 10,
+    marginTop: 5,
+  }
 });

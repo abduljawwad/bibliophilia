@@ -9,7 +9,8 @@ const colors = {
   btnBgColor: '#483D8B',
   markAsReadViewColor: '#555555',
   deleteBtnColor:'#d98695',
-  textColor:'#fff'
+  textColor:'#fff',
+  errorMessage:'crimson',
 };
 
 export default colors;
