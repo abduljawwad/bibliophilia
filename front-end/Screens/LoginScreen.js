@@ -224,6 +224,7 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: '90%',
     marginBottom: '8%',
+    borderBottomColor: '#fff',
   },
   icon: {
     padding: 7,
@@ -259,6 +260,7 @@ export const styles = StyleSheet.create({
   },
   signInButton: {
     borderWidth: 1,
+    borderColor:'#fff',
     padding: 8,
     width: '90%',
     height: '30%',
@@ -287,7 +289,7 @@ export const styles = StyleSheet.create({
   line: {
     height: 1,
     width: '85%',
-    backgroundColor: 'black',
+    backgroundColor: '#fff',
     margin: '5%',
   },
   googleButtonView: {

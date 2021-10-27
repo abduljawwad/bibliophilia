@@ -10,6 +10,7 @@ import LoginScreen from '../Screens/LoginScreen';
 import SignupScreen from '../Screens/SignupScreen';
 import BooksContextProvider from '../Context/BooksContextProvider';
 import {UserCredentialsContext} from '../Context/UserCredentialsContextProvider';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import colors from '../assets/colors'
 
 const Stack = createNativeStackNavigator();
@@ -22,17 +23,16 @@ function MainPages () {
 					initialRouteName="Home" 
 					screenOptions={{
 						headerShown:false,
-					}}
-					tabBarOptions= {{
-						activeBackgroundColor: colors.primaryColor,
-						inactiveBackgroundColor: colors.primaryColor,
-						activeTintColor: '#fff',
-						labelStyle: {
-							fontSize: 12,
+						tabBarActiveBackgroundColor: colors.primaryColor,
+						tabBarInactiveBackgroundColor: colors.primaryColor,
+						tabBarActiveTintColor: '#fff',
+						tabStyle: {
+							backgroundColor: colors.primaryColor,
 						},
 						style: {
-							backgroundColor: 'blue',
-						},
+							backgroundColor: colors.primaryColor,
+							fontSize: 30,
+						}
 					}}
 					>
           <Tab.Screen name="Home" component={HomeScreen} />
@@ -47,6 +47,7 @@ export default function NavigationStack({ navigation }) {
 	const { storedCredentials } = useContext(UserCredentialsContext)
  
   return (
+		<SafeAreaProvider>
 			<NavigationContainer>
 					<Stack.Navigator 
 						screenOptions={{
@@ -70,6 +71,7 @@ export default function NavigationStack({ navigation }) {
 						}
 					</Stack.Navigator>
 			</NavigationContainer>
+		</SafeAreaProvider>
 
   );
 }

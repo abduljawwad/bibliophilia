@@ -8,34 +8,37 @@ const Book = require('./../models/Book')
 module.exports.addBook = async (req,res, next) => {
 	const { title, author, genre, readingFlag, userId, imageUrl } = req.body;
 
-	try{
-		// Find book by title, author & userId 
-		const searchedBook =  await Book.find({title, author, userId})
-		// If book isn't found:
-			// create book
-			// update user
-		if (!searchedBook.length) {
-			const newBook = await Book.create({						
-				title,
-				author,
-				genre,
-				readingFlag,
-				userId,
-				imageUrl
-			});
-			const updatedUser = await User.findByIdAndUpdate(
-				userId, 
-				{$push: { books: newBook._id}},
-				{new: true}
-				);
-		}		
-		// Get all books for the user
-			// Find User
-			// query books array
-		const allBooks = await User.findById(userId).populate('books').select('books -_id')
-		res.send(allBooks)
-	} catch(error){
-		console.log(error)
+	if (title !== "" && author !== "") {
+
+		try{
+			// Find book by title, author & userId 
+			const searchedBook =  await Book.find({title, author, userId})
+			// If book isn't found:
+				// create book
+				// update user
+			if (!searchedBook.length) {
+				const newBook = await Book.create({						
+					title,
+					author,
+					genre,
+					readingFlag,
+					userId,
+					imageUrl
+				});
+				const updatedUser = await User.findByIdAndUpdate(
+					userId, 
+					{$push: { books: newBook._id}},
+					{new: true}
+					);
+			}		
+			// Get all books for the user
+				// Find User
+				// query books array
+			const allBooks = await User.findById(userId).populate('books').select('books -_id')
+			res.send(allBooks)
+		} catch(error){
+			console.log(error)
+		}
 	}
 }
 
