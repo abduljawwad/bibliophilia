@@ -5,6 +5,7 @@ const BookSchema = new Schema({
 	title: String,
 	author: String,
 	genre: String,
+	imageUrl: String,
 	readingFlag: {
 		type: Boolean,
 		default: true,

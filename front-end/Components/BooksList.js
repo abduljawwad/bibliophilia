@@ -19,7 +19,7 @@ export default function BooksList(props) {
       <View style={styles.bookItem}>
         <View style={styles.imagecontainer}>
           <Image style={styles.image}
-            source={{uri:'http://images.amazon.com/images/P/0596004613.01._PE30_PI_SCMZZZZZZZ_.jpg'}}></Image>
+            source={{uri: item.imageUrl}}></Image>
         </View>
         <View style={styles.titleContainer}>
           <Text style={styles.bookTitle}>{item.title}</Text>

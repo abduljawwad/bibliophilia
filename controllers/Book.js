@@ -6,7 +6,7 @@ const User = require('./../models/User')
 const Book = require('./../models/Book')
 
 module.exports.addBook = async (req,res, next) => {
-	const { title, author, genre, readingFlag, userId } = req.body;
+	const { title, author, genre, readingFlag, userId, imageUrl } = req.body;
 
 	try{
 		// Find book by title, author & userId 
@@ -20,7 +20,8 @@ module.exports.addBook = async (req,res, next) => {
 				author,
 				genre,
 				readingFlag,
-				userId
+				userId,
+				imageUrl
 			});
 			const updatedUser = await User.findByIdAndUpdate(
 				userId, 

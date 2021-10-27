@@ -20,7 +20,6 @@ export default function BookInputForm({ addFormValues }) {
 
             <TextInput
               style={styles.input}
-              multiline
               placeholder="Author Name"
               onChangeText={props.handleChange("author")}
               value={props.values.author}
@@ -28,10 +27,16 @@ export default function BookInputForm({ addFormValues }) {
 
             <TextInput
               style={styles.input}
-              placeholder="Genre"
+              placeholder="Genre (optional)"
               onChangeText={props.handleChange("genre")}
               value={props.values.genre}
-              keyboardType="numeric"
+            />
+
+            <TextInput
+              style={styles.input}
+              placeholder="Image URL (optional)"
+              onChangeText={props.handleChange("imageUrl")}
+              value={props.values.imageUrl}
             />
 
             <Button

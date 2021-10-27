@@ -14,6 +14,7 @@ export default function BooksContextProvider({ children }) {
     title: "",
     author: "",
     genre: "",
+    imageUrl:"",
     readingFlag: true,
   });
   const [books, setBooks] = useState([]);
