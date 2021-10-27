@@ -61,7 +61,7 @@ export default function HomeScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView />
+      <SafeAreaView style={styles.safeAreaView}/>
       <View style={styles.header}>
         <Text style={styles.headerText}>Bibliophilia</Text>
       </View>
@@ -93,8 +93,8 @@ export default function HomeScreen({ navigation, route }) {
             styles.plusButtonView,
             {
               position: "absolute",
-              bottom: 20,
-              right: 20,
+              bottom: 10,
+              right: 15,
             },
           ]}
           onPress={showAddBookBar}
@@ -107,7 +107,7 @@ export default function HomeScreen({ navigation, route }) {
         <Count title="Reading" count={readingCount} />
         <Count title="Read" count={readCount} />
       </View> */}
-      <SafeAreaView />
+      <SafeAreaView style={styles.safeAreaView}/>
     </View>
   );
 }
@@ -115,20 +115,24 @@ export default function HomeScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.primaryColor,
+  },
+  safeAreaView: {
+    backgroundColor: colors.primaryColor
   },
   header: {
     height: 70,
-    borderBottomWidth: 0.5,
-    borderBottomColor: colors.borderColor,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: colors.primaryColor,
   },
   headerText: {
     fontSize: 24,
+    color:'#fff'
   },
   body: {
     flex: 1,
+    backgroundColor:colors.mainBgColor
   },
   closeMarkView: {
     height: 50,
@@ -137,17 +141,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  plusButtonView: {
-    height: 50,
-    width: 50,
-    backgroundColor: colors.addButtonBgColor,
-    borderRadius: 25,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  // plusButtonView: {
+  //   backgroundColor: colors.primaryColor,
+  //   height:60,
+  //   width: 60,
+  //   borderRadius: 30,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   color: colors.primaryColor,
+  // },
   plusButton: {
-    color: "white",
-    fontSize: 40,
+    color: colors.primaryColor,
+    fontSize: 60,
+    fontWeight: '600',
   },
   footer: {
     height: 70,

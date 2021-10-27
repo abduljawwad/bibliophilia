@@ -36,7 +36,7 @@ export default function BooksList(props) {
               <Button
                 style={{
                   ...styles.markAsReadView,
-                  backgroundColor: colors.closeMarkBgColor,
+                  backgroundColor: colors.deleteBtnColor,
                 }}
                 onPress={() => deleteBook(item)}
               >
@@ -59,7 +59,7 @@ export default function BooksList(props) {
                 <Button
                   style={{
                     ...styles.markAsReadView,
-                    backgroundColor: colors.closeMarkBgColor,
+                    backgroundColor: colors.deleteBtnColor,
                   }}
                   onPress={() => deleteBook(item)}
                 >
@@ -96,6 +96,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderBottomWidth: 1,
+    backgroundColor: colors.booksListColor,
+    borderColor: colors.mainBgColor,
   },
   bookItem: {
     display: "flex",
@@ -116,6 +118,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     flexDirection: "column",
+    justifyContent: 'space-between',
   },
   bookTitle: {
     flex: 1,
@@ -124,20 +127,23 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     fontWeight: "400",
     fontSize: 16,
-    alignSelf: "flex-start",
+    color:'#fff',
   },
   buttonContainer: {
     width: 100,
     marginRight: 10,
+    justifyContent: 'center',
   },
   markAsReadView: {
-    backgroundColor: "#a5deba",
+    backgroundColor: colors.markAsReadViewColor,
     justifyContent: "center",
     alignItems: "center",
     maxWidth: 100,
     width: 100,
     height: 35,
     marginRight: 10,
+    borderRadius: 5,
+    marginBottom: 3,
   },
   markAsReadText: { paddingRight: 5, color: "white" },
   listEmptyView: {

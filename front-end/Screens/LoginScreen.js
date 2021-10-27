@@ -20,7 +20,7 @@ export default function LoginScreen({ navigation }) {
   const [googleSigninType, setGoogleSigninType] = useState(null)
   const { storedCredentials,setStoredCredentials } = useContext(UserCredentialsContext)
 
-  const { btnBgColor } = colors
+  const { mainBgColor, primaryColor, textColor } = colors
   
   
   const handleLogin = (credentials) => {
@@ -125,7 +125,7 @@ export default function LoginScreen({ navigation }) {
           <Ionicons
             name="ios-book"
             size={150}
-            color={btnBgColor}
+            color={primaryColor}
           ></Ionicons>
           <Text style={styles.titleFrom}>Bibliophilia</Text>
         </View>
@@ -172,7 +172,7 @@ export default function LoginScreen({ navigation }) {
               ...styles.signInButton,
               justifyContent: 'center',
               alignItems: 'flex-start',
-              backgroundColor: '#428fff',
+              backgroundColor: '#111',
             }}
             onPress={() => {handleGoogleSignin()}}
           >
@@ -217,6 +217,7 @@ export const styles = StyleSheet.create({
     marginLeft: 15,
     marginBottom: '2%',
     width: '90%',
+    color: colors.textColor
   },
   iconAndInputcontainer: {
     flexDirection: 'row',
@@ -229,7 +230,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 20,
-    color: colors.btnBgColor
+    color: colors.primaryColor
   },
   textInput: {
     paddingRight: 7,
@@ -239,14 +240,16 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 16,
+    color: colors.textColor,
   },
   messageText: {
-    color: 'green',
+    color: colors.textColor,
     fontSize: 20,
   },
   title: {
     fontSize: 32,
     fontWeight: '400',
+    color: colors.textColor,
   },
   signInSignUpButtonContainer: {
     flex: 1,
@@ -259,7 +262,7 @@ export const styles = StyleSheet.create({
     padding: 8,
     width: '90%',
     height: '30%',
-    backgroundColor: colors.btnBgColor,
+    backgroundColor: colors.primaryColor,
     borderRadius: 50,
     marginBottom: '2%',
     alignItems: 'center',
@@ -303,8 +306,9 @@ export const styles = StyleSheet.create({
     padding: 8,
   },
   titleFrom: {
-    fontSize: 32,
+    fontSize: 40,
     fontWeight: "300",
+    color: colors.textColor
   },
   signupContainer:{
     flex:1,
@@ -320,5 +324,8 @@ export const styles = StyleSheet.create({
   signupBtnText:{
     color: 'blue',
     textDecorationLine: 'underline'
+  },
+  signupText:{
+    color: colors.textColor
   },
 });

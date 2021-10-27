@@ -10,6 +10,7 @@ import LoginScreen from '../Screens/LoginScreen';
 import SignupScreen from '../Screens/SignupScreen';
 import BooksContextProvider from '../Context/BooksContextProvider';
 import {UserCredentialsContext} from '../Context/UserCredentialsContextProvider';
+import colors from '../assets/colors'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -17,7 +18,23 @@ const Tab = createBottomTabNavigator();
 function MainPages () {
   return (
       <BooksContextProvider>
-        <Tab.Navigator initialRouteName="Home" screenOptions={{headerShown:false}}>
+				<Tab.Navigator 
+					initialRouteName="Home" 
+					screenOptions={{
+						headerShown:false,
+					}}
+					tabBarOptions= {{
+						activeBackgroundColor: colors.primaryColor,
+						inactiveBackgroundColor: colors.primaryColor,
+						activeTintColor: '#fff',
+						labelStyle: {
+							fontSize: 12,
+						},
+						style: {
+							backgroundColor: 'blue',
+						},
+					}}
+					>
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Reading" component={ReadingScreen} />
           <Tab.Screen name="Read" component={ReadScreen} />
@@ -31,7 +48,11 @@ export default function NavigationStack({ navigation }) {
  
   return (
 			<NavigationContainer>
-					<Stack.Navigator screenOptions={{headerShown:false}}>
+					<Stack.Navigator 
+						screenOptions={{
+							headerShown:false,
+						}}
+						>
 						{
 						storedCredentials? 
 						<>
@@ -49,5 +70,6 @@ export default function NavigationStack({ navigation }) {
 						}
 					</Stack.Navigator>
 			</NavigationContainer>
+
   );
 }
