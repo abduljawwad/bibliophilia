@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { StyleSheet, Text, View, SafeAreaView, Modal } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Modal, TouchableWithoutFeedback, Keyboard } from "react-native";
 import Count from "../Components/Count";
 import BooksList from "../Components/BooksList";
 import Button from "../Components/Button";
@@ -67,20 +67,24 @@ export default function HomeScreen({ navigation, route }) {
       </View>
       <View style={styles.body}>
         <Modal visible={isAddBookBarVisible} animationType="slide">
-          <SafeAreaView />
-          <View style={styles.contentView}>
-            <Button
-              onPress={hideAddBookBar}
-              style={{
-                ...styles.closeMarkView,
-                alignSelf: "center",
-              }}
-            >
-              <Ionicons name="ios-close" color="white" size={30}></Ionicons>
-            </Button>
-            <BookInputForm addFormValues={addFormValues}></BookInputForm>
-          </View>
-          <SafeAreaView />
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <>
+              <SafeAreaView />
+                <View style={styles.contentView}>
+                  <Button
+                    onPress={hideAddBookBar}
+                    style={{
+                      ...styles.closeMarkView,
+                      alignSelf: "center",
+                    }}
+                  >
+                    <Ionicons name="ios-close" color="white" size={30}></Ionicons>
+                  </Button>
+                  <BookInputForm addFormValues={addFormValues}></BookInputForm>
+                </View>
+              <SafeAreaView />
+            </>
+          </TouchableWithoutFeedback>
         </Modal>
         <BooksList
           books={books}
