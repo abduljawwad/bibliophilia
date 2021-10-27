@@ -26,6 +26,7 @@ function MainPages () {
 						tabBarActiveBackgroundColor: colors.primaryColor,
 						tabBarInactiveBackgroundColor: colors.primaryColor,
 						tabBarActiveTintColor: '#fff',
+						tabBarInActiveTintColor: '#000',
 						tabStyle: {
 							backgroundColor: colors.primaryColor,
 						},
@@ -50,9 +51,19 @@ export default function NavigationStack({ navigation }) {
 		<SafeAreaProvider>
 			<NavigationContainer>
 					<Stack.Navigator 
-						screenOptions={{
-							headerShown:false,
-						}}
+					screenOptions={{
+						headerShown:false,
+						tabBarActiveBackgroundColor: colors.primaryColor,
+						tabBarInactiveBackgroundColor: colors.primaryColor,
+						tabBarActiveTintColor: '#fff',
+						tabStyle: {
+							backgroundColor: colors.primaryColor,
+						},
+						style: {
+							backgroundColor: colors.primaryColor,
+							fontSize: 30,
+						}
+					}}
 						>
 						{
 						storedCredentials? 
@@ -72,6 +83,9 @@ export default function NavigationStack({ navigation }) {
 					</Stack.Navigator>
 			</NavigationContainer>
 		</SafeAreaProvider>
+		// <BooksContextProvider>
+		// 	<HomeScreen />
+		// </BooksContextProvider>
 
   );
 }
