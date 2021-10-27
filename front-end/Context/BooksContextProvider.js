@@ -134,6 +134,7 @@ export default function BooksContextProvider({ children }) {
       ...newBook,
       ...formValues,
     }));
+    setIsAddBookBarVisible(false)
   };
 
   const valObj = {
