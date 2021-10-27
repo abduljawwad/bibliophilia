@@ -1,13 +1,29 @@
 import React from "react";
 import { StyleSheet, Button, TextInput, View, Text } from "react-native";
 import { Formik } from "formik";
+import * as yup from 'yup'
+
+const bookInputFormSchema = yup.object({
+  title: yup.string()
+    .required()
+    .min(1),
+  author: yup.string()
+    .required()
+    .min(2),
+  genre: yup.string(),
+  imageUrl: yup.string(),
+})
 
 export default function BookInputForm({ addFormValues }) {
   return (
     <View style={styles.container}>
       <Formik
         initialValues={{ title: "", author: "", genre: "" }}
-        onSubmit={(values) => addFormValues(values)}
+        validationSchema={bookInputFormSchema}
+        onSubmit={(values, actions) => {
+          addFormValues(values)
+          actions.resetForm()
+        }}
       >
         {(props) => (
           <View>
@@ -43,6 +59,7 @@ export default function BookInputForm({ addFormValues }) {
               color="maroon"
               title="Submit"
               onPress={props.handleSubmit}
+              style={{backgroundColor: 'maroon', borderColor:'#fff', borderWidth: 1}}
             />
           </View>
         )}
