@@ -169,6 +169,7 @@ export const styles = StyleSheet.create({
     marginLeft: 15,
     marginBottom: '2%',
     width: '90%',
+    color: colors.textColor,
   },
   textInput: {
     paddingRight: 7,
@@ -184,13 +185,14 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: '90%',
     marginBottom: '8%',
+    borderBottomColor: colors.textColor,
   },
   icon: {
     padding: 7,
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 20,
-    color: colors.btnBgColor
+    color: colors.primaryColor,
   },
   signInSignUpButtonContainer: {
     flex: 1,
@@ -199,10 +201,9 @@ export const styles = StyleSheet.create({
     marginHorizontal: '10%',
   },
   signInButton: {
-    borderWidth: 1,
     padding: 8,
     width: '90%',
-    backgroundColor: colors.btnBgColor,
+    backgroundColor: colors.primaryColor,
     borderRadius: 50,
     marginBottom: '2%',
     alignItems: 'center',
@@ -216,7 +217,7 @@ export const styles = StyleSheet.create({
   line: {
     height: 1,
     width: '85%',
-    backgroundColor: 'black',
+    backgroundColor: colors.textColor,
     margin: '5%',
   },
   activityIndicatorContainer: {
@@ -232,12 +233,15 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   signUpButton:{
-    color: '#111',
+    color: colors.textColor,
     display: 'flex',
     flexDirection: 'row',
   },
   signupBtnText:{
     color: 'blue',
     textDecorationLine: 'underline'
+  },
+  signupText: {
+    color: colors.textColor,
   },
 });
